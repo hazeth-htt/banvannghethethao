@@ -322,12 +322,27 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
       </header>
 
       <main className="flex-1 pt-16 md:pt-20">
-        {/* Hero */}
-        <div className="relative py-14 md:py-18 bg-gradient-to-b from-[#0d0919] to-[#07040d] overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] rounded-full bg-bvntt-purple/10 blur-[100px] pointer-events-none" />
+        {/* Hero with Blurred Cover Background & Purple Gradient */}
+        <div className="relative py-16 md:py-22 overflow-hidden bg-[#07040d]">
+          {/* Background Cover Image */}
+          <div className="absolute inset-0 z-0">
+            <img
+              src="/assets/cover2.jpg"
+              alt="Cover Ban Văn nghệ Thể thao"
+              className="w-full h-full object-cover object-center opacity-30 scale-105"
+            />
+            {/* Dark & Purple gradient overlays */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#07040d]/80 via-purple-950/35 to-[#07040d]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#07040d]/60 via-transparent to-[#07040d]/60" />
+            <div className="absolute inset-0 backdrop-blur-[1.5px]" />
+          </div>
+
+          {/* Ambient Purple Glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[550px] h-[300px] rounded-full bg-bvntt-purple/20 blur-[110px] pointer-events-none z-[1]" />
+
+          {/* Header Content */}
           <div className="relative z-10 max-w-2xl mx-auto text-center px-6">
-            <div className="inline-block text-[10px] font-semibold tracking-[0.2em] uppercase text-bvntt-lilac mb-4 border border-bvntt-lilac/30 px-4 py-1.5">Tuyển thành viên 2026</div>
-            <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl uppercase leading-tight text-bvntt-cream mb-4">
+            <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl uppercase leading-tight text-bvntt-cream mb-4 tracking-normal">
               ĐĂNG KÝ<br /><span className="text-bvntt-lilac">GIA NHẬP BAN</span>
             </h1>
             <p className="text-sm text-bvntt-muted font-normal leading-relaxed max-w-lg mx-auto">
