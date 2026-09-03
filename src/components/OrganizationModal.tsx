@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight } from "lucide-react";
+import { X, ArrowRight, ArrowUpRight } from "lucide-react";
 import { DivisionItem } from "../data/divisions";
 import { ClubItem } from "../data/clubs";
 
@@ -132,14 +132,36 @@ export const OrganizationModal = ({ division, club = null, onClose, onRegisterCl
 
           {/* Footer */}
           <div className="border-t border-white/[0.07] p-6 sm:p-8 flex items-center justify-between">
-            <span className="text-[11px] text-bvntt-muted">Tuyển thành viên 2026 đang diễn ra</span>
-            <button
-              onClick={handleRegister}
-              className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.12em] uppercase text-bvntt-cream border border-bvntt-border-md bg-white/[0.04] px-5 py-2.5 hover:border-bvntt-lilac hover:text-bvntt-lilac hover:bg-bvntt-lilac/10 transition-all duration-300"
-            >
-              <span>Tuyển thành viên 2026</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            <span className="text-[11px] text-bvntt-muted">
+              {isDivision ? "Tuyển thành viên 2026 đang diễn ra" : `Tuyển thành viên ${club?.name} đang diễn ra`}
+            </span>
+            {isDivision ? (
+              <button
+                onClick={handleRegister}
+                className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.12em] uppercase text-bvntt-cream border border-bvntt-border-md bg-white/[0.04] px-5 py-2.5 hover:border-bvntt-lilac hover:text-bvntt-lilac hover:bg-bvntt-lilac/10 transition-all duration-300 cursor-pointer"
+              >
+                <span>Tuyển thành viên 2026</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            ) : club?.recruitmentUrl ? (
+              <a
+                href={club.recruitmentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.12em] uppercase text-black bg-bvntt-lilac hover:bg-white border border-bvntt-lilac hover:border-white px-5 py-2.5 shadow-[0_0_15px_rgba(214,185,255,0.3)] transition-all duration-300 font-bold cursor-pointer"
+              >
+                <span>Đăng ký</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            ) : (
+              <button
+                onClick={handleRegister}
+                className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.12em] uppercase text-black bg-bvntt-lilac hover:bg-white border border-bvntt-lilac hover:border-white px-5 py-2.5 shadow-[0_0_15px_rgba(214,185,255,0.3)] transition-all duration-300 font-bold cursor-pointer"
+              >
+                <span>Đăng ký</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </motion.div>
       </div>

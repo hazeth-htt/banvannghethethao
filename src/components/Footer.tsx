@@ -35,26 +35,17 @@ export const Footer = () => {
             </p>
           </div>
 
-          {/* 7 Câu lạc bộ trực thuộc - 1 dòng mỗi CLB */}
+          {/* 7 Câu lạc bộ trực thuộc - 1 dòng mỗi CLB, không role */}
           <div className="space-y-4">
             <div className="section-label">7 CLB trực thuộc</div>
             <ul className="space-y-2 text-xs text-bvntt-muted font-light">
-              {[
-                { name: "D.O.P", role: "Nhảy" },
-                { name: "Glee BK", role: "Âm nhạc" },
-                { name: "EMCEE", role: "MC" },
-                { name: "BeU", role: "Múa" },
-                { name: "D.A.S", role: "Kịch" },
-                { name: "HBC", role: "Bóng rổ" },
-                { name: "HRO", role: "Bóng chày" },
-              ].map((c) => (
-                <li key={c.name}>
+              {["D.O.P", "Glee BK", "EMCEE", "BeU", "D.A.S", "HBC", "HRO"].map((name) => (
+                <li key={name}>
                   <button
                     onClick={() => scrollTo("#organization")}
-                    className="hover:text-bvntt-cream transition-colors duration-200 text-left flex items-center gap-1.5 cursor-pointer"
+                    className="hover:text-bvntt-cream transition-colors duration-200 text-left cursor-pointer block"
                   >
-                    <span className="font-medium text-bvntt-cream/90">{c.name}</span>
-                    <span className="text-white/35">({c.role})</span>
+                    <span className="font-medium text-bvntt-cream/90">{name}</span>
                   </button>
                 </li>
               ))}
