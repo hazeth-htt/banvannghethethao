@@ -39,7 +39,7 @@ export const OrganizationTimeline = ({ onRegisterClick }: OrganizationTimelinePr
                 CƠ CẤU <span className="text-bvntt-lilac">BAN VĂN NGHỆ THỂ THAO</span>
               </h2>
               <p className="text-sm sm:text-base text-bvntt-muted font-normal max-w-xl mx-auto leading-relaxed pt-1">
-                4 mảng chuyên môn nòng cốt và 7 câu lạc bộ nghệ thuật - thể thao trực thuộc trong một mô hình tổ chức chuyên nghiệp, liên kết chặt chẽ.
+                4 mảng chuyên môn nòng cốt và 7 câu lạc bộ văn nghệ, nghệ thuật & thể thao trực thuộc trong một mô hình tổ chức chuyên nghiệp, liên kết chặt chẽ.
               </p>
             </div>
           </FadeUp>

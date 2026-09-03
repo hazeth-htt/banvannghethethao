@@ -24,7 +24,7 @@ const stages: Stage[] = [
     status: "upcoming",
   },
   {
-    date: "10/09/2026",
+    date: "22/09",
     title: "Kết quả",
     description: "Công bố danh sách thành viên chính thức gia nhập đại gia đình",
     status: "upcoming",
