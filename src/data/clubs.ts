@@ -32,15 +32,15 @@ export const CLUBS_DATA: ClubItem[] = [
   },
   {
     id: "gleebk",
-    name: "Glee BK",
-    fullName: "Câu lạc bộ Âm nhạc Glee BK",
+    name: "GleeBK",
+    fullName: "Câu lạc bộ Âm nhạc GleeBK",
     category: "music",
     categoryLabel: "Câu lạc bộ Âm nhạc",
     color: "#6A00FF",
     tag: "Vocal / Acoustic / Band / Harmonies",
     recruitmentUrl: "https://docs.google.com/forms/d/e/1FAIpQLScm9odnM1ONY_QPywPoOuNTKGAM40YjxsWRyUJLKRImD6HjCw/viewform",
     shortDesc: "Nơi thắp sáng niềm đam mê ca hát và nghệ thuật, mang những giai điệu trẻ trung làm bừng sáng các sân khấu Bách Khoa.",
-    description: "Là ngôi nhà của những tâm hồn đồng điệu với âm nhạc, câu lạc bộ Âm nhạc Glee BK trực thuộc Ban Văn Nghệ Thể Thao - Đoàn Thanh niên Đại học Bách khoa Hà Nội là nơi thắp sáng niềm đam mê ca hát và nghệ thuật của các bạn sinh viên. Đến với Glee BK, các thành viên không chỉ cùng nhau luyện thanh, hòa giọng mà còn mang những giai điệu trẻ trung, tươi mới làm bừng sáng các sân khấu và sự kiện lớn của Nhà trường. Đây chính là mảnh ghép tuyệt vời để tuổi trẻ Bách Khoa cất cao tiếng hát, sống trọn đam mê và sẻ chia những khoảnh khắc đáng nhớ.",
+    description: "Là ngôi nhà của những tâm hồn đồng điệu với âm nhạc, câu lạc bộ Âm nhạc GleeBK trực thuộc Ban Văn Nghệ Thể Thao - Đoàn Thanh niên Đại học Bách khoa Hà Nội là nơi thắp sáng niềm đam mê ca hát và nghệ thuật của các bạn sinh viên. Đến với GleeBK, các thành viên không chỉ cùng nhau luyện thanh, hòa giọng mà còn mang những giai điệu trẻ trung, tươi mới làm bừng sáng các sân khấu và sự kiện lớn của Nhà trường. Đây chính là mảnh ghép tuyệt vời để tuổi trẻ Bách Khoa cất cao tiếng hát, sống trọn đam mê và sẻ chia những khoảnh khắc đáng nhớ.",
     highlights: [
       "Luyện thanh, hòa giọng và biểu diễn tại các sự kiện lớn của Trường",
       "Mảnh ghép gắn kết những tâm hồn đồng điệu với âm nhạc",

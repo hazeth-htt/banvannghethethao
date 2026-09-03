@@ -37,15 +37,15 @@ export const Footer = () => {
 
           {/* 7 Câu lạc bộ trực thuộc - 1 dòng mỗi CLB, không role */}
           <div className="space-y-4">
-            <div className="section-label">7 CLB trực thuộc</div>
+            <div className="section-label text-bvntt-lilac">7 CLB trực thuộc</div>
             <ul className="space-y-2 text-xs text-bvntt-muted font-light">
-              {["D.O.P", "Glee BK", "EMCEE", "BeU", "D.A.S", "HBC", "HRO"].map((name) => (
+              {["D.O.P", "GleeBK", "EMCEE", "BeU", "D.A.S", "HBC", "HRO"].map((name) => (
                 <li key={name}>
                   <button
                     onClick={() => scrollTo("#organization")}
                     className="hover:text-bvntt-cream transition-colors duration-200 text-left cursor-pointer block"
                   >
-                    <span className="font-medium text-bvntt-cream/90">{name}</span>
+                    <span>{name}</span>
                   </button>
                 </li>
               ))}
@@ -54,7 +54,7 @@ export const Footer = () => {
 
           {/* 4 Mảng chuyên môn */}
           <div className="space-y-4">
-            <div className="section-label">4 Mảng chuyên môn</div>
+            <div className="section-label text-bvntt-lilac">4 Mảng chuyên môn</div>
             <ul className="space-y-2.5 text-xs text-bvntt-muted font-light">
               <li>
                 <button
@@ -93,7 +93,7 @@ export const Footer = () => {
 
           {/* Contact */}
           <div className="space-y-4">
-            <div className="section-label">Liên hệ</div>
+            <div className="section-label text-bvntt-lilac">Liên hệ</div>
             <ul className="space-y-3 text-xs text-bvntt-muted font-light">
               <li>
                 <a

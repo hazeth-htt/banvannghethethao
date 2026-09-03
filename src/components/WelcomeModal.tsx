@@ -57,26 +57,16 @@ export const WelcomeModal = ({
             />
           </div>
 
-          {/* Title: Unified League Gothic font with airy spacing */}
-          <div className="mb-5 sm:mb-6">
-            <h3 className="font-display uppercase tracking-normal text-center flex flex-col items-center">
-              <span className="block font-semibold text-xs sm:text-sm md:text-base text-bvntt-cream/70 tracking-[0.18em] mb-2.5 sm:mb-3">
+          {/* Title: Inter bold for top line, League Gothic for BAN VĂN NGHỆ THỂ THAO? */}
+          <div className="mb-7 sm:mb-8">
+            <h3 className="uppercase tracking-normal text-center flex flex-col items-center">
+              <span className="block font-sans font-bold text-xs sm:text-sm tracking-[0.14em] text-bvntt-cream/80 mb-2 sm:mb-2.5">
                 BẠN MUỐN TRỞ THÀNH THÀNH VIÊN CỦA
               </span>
-              <span className="block font-black text-3xl sm:text-4xl md:text-5xl text-bvntt-lilac drop-shadow-[0_0_25px_rgba(214,185,255,0.4)] leading-[1.1]">
+              <span className="block font-display font-black text-3xl sm:text-4xl md:text-5xl text-bvntt-lilac drop-shadow-[0_0_25px_rgba(214,185,255,0.4)] leading-[1.1]">
                 BAN VĂN NGHỆ THỂ THAO?
               </span>
             </h3>
-          </div>
-
-          {/* Subtitle */}
-          <div className="text-xs sm:text-sm leading-relaxed max-w-sm mx-auto mb-7 space-y-0.5">
-            <p className="text-bvntt-cream/85 font-normal">
-              Đạp sóng gió. Hiện thực hóa chiêm bao
-            </p>
-            <p className="text-bvntt-lilac/90 font-medium">
-              Look here now, Văn nghệ Thể thao chiến.
-            </p>
           </div>
 
           {/* Two Buttons: Tìm hiểu thêm & Đăng ký ngay */}
