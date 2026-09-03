@@ -9,7 +9,19 @@ interface HeroProps {
 export const Hero = ({ onRegisterClick }: HeroProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] });
-  const bgOpacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.5]);
+
+  // Multi-layer parallax scroll transforms
+  const videoY = useTransform(scrollYProgress, [0, 1], ["0%", "28%"]);
+  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const bgOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.35]);
+
+  // Foreground content parallax (moves faster & fades out with slight scale down)
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "36%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const contentScale = useTransform(scrollYProgress, [0, 0.7], [1, 0.96]);
+
+  // Ambient floating glow orb
+  const orbY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
 
   const scrollToRecruitment = () => {
     onRegisterClick?.();
@@ -22,8 +34,11 @@ export const Hero = ({ onRegisterClick }: HeroProps) => {
       ref={containerRef}
       className="section-snap scroll-mt-0 relative w-full h-[calc(100vh-4.75rem)] md:h-[calc(100vh-5.5rem)] min-h-[520px] flex items-center justify-center overflow-hidden bg-[#07040d]"
     >
-      {/* ── Full-bleed Video Background - Edge-to-Edge ── */}
-      <div className="absolute inset-0 z-0">
+      {/* ── Full-bleed Video Background with Parallax ── */}
+      <motion.div
+        style={{ y: videoY, scale: videoScale }}
+        className="absolute inset-0 z-0 origin-center"
+      >
         <motion.video
           style={{ opacity: bgOpacity }}
           className="w-full h-full object-cover"
@@ -40,10 +55,19 @@ export const Hero = ({ onRegisterClick }: HeroProps) => {
         {/* Cinematic dark overlay: High contrast for maximum text legibility */}
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/30 to-[#07040d]" />
-      </div>
+      </motion.div>
 
-      {/* ── Centered Content ── */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-12 pt-16 pb-6 md:pt-20 md:pb-8 max-w-6xl mx-auto w-full space-y-3 sm:space-y-4 md:space-y-5">
+      {/* Ambient Parallax Glow Orb */}
+      <motion.div
+        style={{ y: orbY }}
+        className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[350px] rounded-full bg-bvntt-purple/20 blur-[120px] pointer-events-none z-[1]"
+      />
+
+      {/* ── Centered Content with Foreground Parallax ── */}
+      <motion.div
+        style={{ y: contentY, opacity: contentOpacity, scale: contentScale }}
+        className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-12 pt-16 pb-6 md:pt-20 md:pb-8 max-w-6xl mx-auto w-full space-y-3 sm:space-y-4 md:space-y-5"
+      >
         {/* Main Title: Horizontal on desktop, stacked on mobile - No overlapping diacritics */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -86,7 +110,7 @@ export const Hero = ({ onRegisterClick }: HeroProps) => {
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };
