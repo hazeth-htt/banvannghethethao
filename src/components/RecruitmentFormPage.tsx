@@ -303,7 +303,7 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
                       value={data.khoa}
                       onChange={set("khoa")}
                       required
-                      options={["K63", "K64", "K65", "K66", "K67", "K68", "K69", "K70", "Khác"]}
+                      options={["K71", "K70", "K69", "K68"]}
                     />
                     <SelectInput
                       label="Trường / Khoa"
