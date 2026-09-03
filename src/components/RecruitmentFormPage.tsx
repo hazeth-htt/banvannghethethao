@@ -343,8 +343,10 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl uppercase leading-tight text-bvntt-cream mb-4 tracking-normal">
               ĐĂNG KÝ<br /><span className="text-bvntt-lilac">GIA NHẬP BAN</span>
             </h1>
-            <p className="text-sm text-bvntt-muted font-normal leading-relaxed max-w-lg mx-auto">
-              Điền đầy đủ thông tin bên dưới. Form sẽ hướng dẫn bạn qua từng phần theo mảng bạn ứng tuyển.
+            <p className="text-xs sm:text-sm text-bvntt-muted font-normal leading-relaxed max-w-md mx-auto">
+              <span>Điền đầy đủ thông tin bên dưới.</span>
+              <br />
+              <span className="text-white/45">Form sẽ hướng dẫn bạn qua từng phần theo mảng bạn ứng tuyển.</span>
             </p>
           </div>
         </div>
