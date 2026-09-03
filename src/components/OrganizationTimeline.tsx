@@ -39,7 +39,7 @@ export const OrganizationTimeline = ({ onRegisterClick }: OrganizationTimelinePr
                 CƠ CẤU <span className="text-bvntt-lilac">BAN VĂN NGHỆ THỂ THAO</span>
               </h2>
               <p className="text-sm sm:text-base text-bvntt-muted font-normal max-w-xl mx-auto leading-relaxed pt-1">
-                4 mảng chuyên môn nòng cốt và 7 câu lạc bộ nghệ thuật – thể thao trực thuộc trong một mô hình tổ chức chuyên nghiệp, liên kết chặt chẽ.
+                4 mảng chuyên môn nòng cốt và 7 câu lạc bộ nghệ thuật - thể thao trực thuộc trong một mô hình tổ chức chuyên nghiệp, liên kết chặt chẽ.
               </p>
             </div>
           </FadeUp>
@@ -57,7 +57,7 @@ export const OrganizationTimeline = ({ onRegisterClick }: OrganizationTimelinePr
             className="absolute left-4 md:left-1/2 top-48 bottom-28 w-px bg-gradient-to-b from-bvntt-purple to-bvntt-lilac md:-translate-x-px z-0"
           />
 
-          {/* ── Root node: Ban Văn nghệ Thể thao — 100% Centered ── */}
+          {/* ── Root node: Ban Văn nghệ Thể thao - 100% Centered ── */}
           <FadeUp className="w-full flex justify-center mb-16 md:mb-20">
             <div className="w-full max-w-[480px] mx-auto border border-white/[0.08] bg-[#0a0514] p-6 md:p-8 flex flex-col items-center justify-center text-center">
               <img
@@ -76,7 +76,7 @@ export const OrganizationTimeline = ({ onRegisterClick }: OrganizationTimelinePr
             </div>
           </FadeUp>
 
-          {/* ── 4 Division nodes — alternating left/right on desktop ── */}
+          {/* ── 4 Division nodes - alternating left/right on desktop ── */}
           <div className="space-y-0">
             {DIVISIONS_DATA.map((div, i) => (
               <OrganizationNode
@@ -88,7 +88,7 @@ export const OrganizationTimeline = ({ onRegisterClick }: OrganizationTimelinePr
             ))}
           </div>
 
-          {/* ── 7 Clubs terminal node — 100% Centered ── */}
+          {/* ── 7 Clubs terminal node - 100% Centered ── */}
           <FadeUp delay={0.1} className="w-full flex justify-center mt-16 md:mt-20 mb-4">
             <div className="w-full max-w-[480px] mx-auto border border-white/[0.08] bg-[#0a0514] p-5 md:p-7 text-center flex flex-col items-center justify-center">
               <h3 className="font-display font-bold text-bvntt-cream text-2xl md:text-3xl uppercase tracking-normal text-center">
@@ -100,7 +100,7 @@ export const OrganizationTimeline = ({ onRegisterClick }: OrganizationTimelinePr
         </div>
         {/* END vertical timeline */}
 
-        {/* ── 7 Clubs Grid — below the timeline ── */}
+        {/* ── 7 Clubs Grid - below the timeline ── */}
         <div id="clubs" className="section-snap mt-16 md:mt-24">
           <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12 space-y-2">
             <h3 className="font-display font-bold text-2xl md:text-3xl text-bvntt-cream uppercase tracking-normal">
@@ -111,7 +111,7 @@ export const OrganizationTimeline = ({ onRegisterClick }: OrganizationTimelinePr
             </p>
           </div>
 
-          {/* Club Grid — 4 on top, 3 below + 8th box with watermarked logo */}
+          {/* Club Grid - 4 on top, 3 below + 8th box with watermarked logo */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {CLUBS_DATA.map((club, i) => (
               <ClubCard

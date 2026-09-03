@@ -2,7 +2,7 @@ export const SITE_CONFIG = {
   name: "Ban Văn nghệ Thể thao",
   subName: "Đoàn Đại học Bách khoa Hà Nội",
   shortName: "BVNTT HUST",
-  description: "Ban Văn nghệ Thể thao — Đoàn Đại học Bách khoa Hà Nội. Nơi khơi nguồn đam mê, thắp sáng tài năng và lưu giữ những khoảnh khắc thanh xuân rực rỡ nhất dưới mái trường Bách khoa.",
+  description: "Ban Văn nghệ Thể thao - Đoàn Đại học Bách khoa Hà Nội. Nơi khơi nguồn đam mê, thắp sáng tài năng và lưu giữ những khoảnh khắc thanh xuân rực rỡ nhất dưới mái trường Bách khoa.",
   facebookUrl: "https://www.facebook.com/bvnttbkhn",
   recruitmentFormUrl: "https://forms.gle/bvntt-tuyen-thanh-vien-2026",
   googleScriptUrl: "", // Dán link Web App Google Apps Script vào đây khi triển khai

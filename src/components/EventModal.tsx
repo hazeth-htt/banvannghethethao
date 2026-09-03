@@ -32,7 +32,7 @@ export const EventModal = ({ event, onClose, onViewDetail }: EventModalProps) =>
           className="fixed inset-0 bg-black/70 backdrop-blur-sm"
         />
 
-        {/* Modal — editorial panel */}
+        {/* Modal - editorial panel */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -43,7 +43,7 @@ export const EventModal = ({ event, onClose, onViewDetail }: EventModalProps) =>
           {/* Header strip */}
           <div className="flex items-start justify-between p-6 sm:p-8 border-b border-white/[0.07]">
             <div className="space-y-1 pr-8">
-              <div className="section-label text-bvntt-muted">{event.category} — {event.timeframe}</div>
+              <div className="section-label text-bvntt-muted">{event.category} - {event.timeframe}</div>
               <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-bvntt-cream">
                 {event.title}
               </h2>

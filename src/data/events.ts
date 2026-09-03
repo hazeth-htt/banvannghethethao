@@ -131,7 +131,7 @@ export const EVENTS_DATA: EventItem[] = [
   {
     id: "bkfs",
     slug: "bkfs-giai-bong-da-nu",
-    title: "BKFS — Giải bóng đá nữ",
+    title: "BKFS - Giải bóng đá nữ",
     subtitle: "Tôn vinh bản lĩnh và nét duyên dáng trên sân cỏ",
     category: "Giải đấu Thể thao",
     timeframe: "Mùa giải hàng năm",
@@ -157,7 +157,7 @@ export const EVENTS_DATA: EventItem[] = [
   {
     id: "bk-cup",
     slug: "bk-cup-giai-bong-da-nam",
-    title: "BK's Cup — Giải bóng đá nam",
+    title: "BK's Cup - Giải bóng đá nam",
     subtitle: "Chảo lửa thể thao cuồng nhiệt của sinh viên Bách khoa",
     category: "Giải đấu Thể thao",
     timeframe: "Mùa giải hàng năm",

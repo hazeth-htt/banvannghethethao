@@ -63,7 +63,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-xs text-bvntt-muted font-light">
               <li>01. Mảng Tổ chức</li>
               <li>02. Mảng Truyền thông</li>
-              <li>03. Mảng Media — Design</li>
+              <li>03. Mảng Media - Design</li>
               <li>04. Mảng Đối ngoại</li>
             </ul>
             <div className="section-label mt-4 pt-4 border-t border-white/[0.05]">7 CLB trực thuộc</div>
@@ -113,13 +113,13 @@ export const Footer = () => {
           <h2
             className="font-display font-black tracking-tighter text-[12vw] md:text-[10vw] lg:text-[8vw] text-white/[0.04] hover:text-white/[0.07] transition-colors duration-700 leading-none uppercase cursor-default whitespace-nowrap"
           >
-            SEE YOU ON STAGE.
+            TRÁCH NHIỆM - ĐAM MÊ - TỈ MẨN - SÁNG TẠO
           </h2>
         </div>
 
         {/* Bottom copyright */}
         <div className="border-t border-white/[0.05] py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] text-bvntt-muted tracking-[0.06em]">
-          <span>© {year} Ban Văn nghệ Thể thao — Đoàn Đại học Bách khoa Hà Nội</span>
+          <span>© {year} Ban Văn nghệ Thể thao - Đoàn Đại học Bách khoa Hà Nội</span>
           <span className="text-white/30">Được xây dựng với tâm huyết cho sinh viên HUST</span>
         </div>
 

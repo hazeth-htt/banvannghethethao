@@ -87,7 +87,7 @@ export const AdminPage = () => {
               </div>
             </div>
             <h1 className="font-display font-bold text-2xl text-bvntt-cream uppercase tracking-wide">Admin Panel</h1>
-            <p className="text-xs text-bvntt-muted tracking-wider">Ban Văn nghệ Thể thao — Bách Khoa</p>
+            <p className="text-xs text-bvntt-muted tracking-wider">Ban Văn nghệ Thể thao - Bách Khoa</p>
           </div>
 
           <div className="space-y-4">
@@ -124,7 +124,7 @@ export const AdminPage = () => {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
               <Shield className="w-4 h-4 text-bvntt-lilac" />
-              <span className="text-sm font-bold tracking-[0.06em] uppercase text-bvntt-cream">Admin — BVNTT 2026</span>
+              <span className="text-sm font-bold tracking-[0.06em] uppercase text-bvntt-cream">Admin - BVNTT 2026</span>
               <div className="hidden sm:flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full text-[10px] text-emerald-400 font-medium">
                 <Database className="w-3 h-3" />
                 <span>Neon PostgreSQL</span>
@@ -217,7 +217,7 @@ export const AdminPage = () => {
                     </div>
                     <div className="hidden sm:block">
                       <p className="text-[10px] text-bvntt-muted tracking-wider uppercase">Khoá / Lớp</p>
-                      <p className="text-sm text-bvntt-cream">{s.khoa} — {s.lop}</p>
+                      <p className="text-sm text-bvntt-cream">{s.khoa} - {s.lop}</p>
                     </div>
                     <div className="hidden sm:block">
                       <p className="text-[10px] text-bvntt-muted tracking-wider uppercase">Mảng</p>
@@ -255,7 +255,7 @@ export const AdminPage = () => {
                       ].map(([k, v]) => (
                         <div key={k}>
                           <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">{k}</p>
-                          <p className="text-sm text-bvntt-cream mt-0.5 break-all">{v || "—"}</p>
+                          <p className="text-sm text-bvntt-cream mt-0.5 break-all">{v || "-"}</p>
                         </div>
                       ))}
                     </div>
@@ -265,7 +265,7 @@ export const AdminPage = () => {
                         {Object.entries(s.answers).map(([q, a]) => (
                           <div key={q}>
                             <p className="text-[11px] font-medium text-bvntt-cream/70 mb-1">{q}</p>
-                            <p className="text-sm text-bvntt-muted leading-relaxed whitespace-pre-wrap">{a || "—"}</p>
+                            <p className="text-sm text-bvntt-muted leading-relaxed whitespace-pre-wrap">{a || "-"}</p>
                           </div>
                         ))}
                       </div>

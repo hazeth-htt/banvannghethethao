@@ -7,7 +7,7 @@ const items = [
   "✦",
   "MẢNG TRUYỀN THÔNG",
   "✦",
-  "MẢNG MEDIA — DESIGN",
+  "MẢNG MEDIA - DESIGN",
   "✦",
   "MẢNG ĐỐI NGOẠI",
   "✦",

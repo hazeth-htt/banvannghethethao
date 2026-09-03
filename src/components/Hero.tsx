@@ -22,7 +22,7 @@ export const Hero = ({ onRegisterClick }: HeroProps) => {
       ref={containerRef}
       className="section-snap scroll-mt-0 relative w-full h-[calc(100vh-4.75rem)] md:h-[calc(100vh-5.5rem)] min-h-[520px] flex items-center justify-center overflow-hidden bg-[#07040d]"
     >
-      {/* ── Full-bleed Video Background — Edge-to-Edge ── */}
+      {/* ── Full-bleed Video Background - Edge-to-Edge ── */}
       <div className="absolute inset-0 z-0">
         <motion.video
           style={{ opacity: bgOpacity }}
@@ -44,7 +44,7 @@ export const Hero = ({ onRegisterClick }: HeroProps) => {
 
       {/* ── Centered Content ── */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-12 pt-16 pb-6 md:pt-20 md:pb-8 max-w-5xl mx-auto w-full space-y-3 sm:space-y-4 md:space-y-5">
-        {/* Main Title: VĂN NGHỆ on top, THỂ THAO below — Dominant & Responsive */}
+        {/* Main Title: VĂN NGHỆ on top, THỂ THAO below - Dominant & Responsive */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ export const Hero = ({ onRegisterClick }: HeroProps) => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-xs sm:text-sm md:text-base text-bvntt-muted font-normal leading-relaxed max-w-xs sm:max-w-md md:max-w-lg mx-auto"
         >
-          Nơi khơi nguồn đam mê, thắp sáng tài năng và lưu giữ những khoảnh khắc thanh xuân rực rỡ nhất dưới mái Bách khoa.
+          Nơi khơi nguồn đam mê, thắp sáng tài năng và lưu giữ những khoảnh khắc rực rỡ, bùng nổ nhất của tuổi trẻ Bách khoa.
         </motion.p>
 
         {/* CTA Button: Synchronized with site button style and size */}

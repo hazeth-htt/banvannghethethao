@@ -25,7 +25,7 @@ export const OrganizationNode = ({ division, index, onSelect }: OrganizationNode
       transition={{ duration: 0.75, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
       className="relative py-12 md:py-16"
     >
-      {/* Timeline node dot — left on mobile, center on desktop */}
+      {/* Timeline node dot - left on mobile, center on desktop */}
       <div
         className={`absolute top-[3.5rem] w-2.5 h-2.5 rounded-full bg-bvntt-bg border border-white/30 z-10
           left-4 md:left-1/2 md:-translate-x-[5px]`}
@@ -49,7 +49,7 @@ export const OrganizationNode = ({ division, index, onSelect }: OrganizationNode
             </span>
           </h3>
 
-          {/* Role — single purple accent */}
+          {/* Role - single purple accent */}
           <p className="text-xs font-semibold text-bvntt-lilac tracking-wide uppercase">
             {division.role}
           </p>
@@ -59,7 +59,7 @@ export const OrganizationNode = ({ division, index, onSelect }: OrganizationNode
             {division.shortDesc}
           </p>
 
-          {/* Tasks — numbered, no bullet icons */}
+          {/* Tasks - numbered, no bullet icons */}
           <div className="space-y-0 pt-2">
             {division.tasks.slice(0, 3).map((t, i) => (
               <div key={i} className="flex items-start gap-3 text-sm text-bvntt-muted py-3 border-b border-white/[0.05] last:border-0">
@@ -74,7 +74,7 @@ export const OrganizationNode = ({ division, index, onSelect }: OrganizationNode
             ))}
           </div>
 
-          {/* CTA — aligned to the right */}
+          {/* CTA - aligned to the right */}
           <div className="flex justify-end pt-2">
             <button
               onClick={() => onSelect(division)}

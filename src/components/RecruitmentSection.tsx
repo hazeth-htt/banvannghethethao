@@ -60,7 +60,7 @@ export const RecruitmentSection = ({ onOpenFormModal }: RecruitmentSectionProps)
 
         {/* ── Recruitment Timeline: Centered & Balanced ── */}
         <div className="relative max-w-4xl mx-auto">
-          {/* Horizontal connector line — desktop only, connecting dot centers */}
+          {/* Horizontal connector line - desktop only, connecting dot centers */}
           <div className="hidden md:block absolute top-[11px] left-[16.666%] right-[16.666%] h-px bg-white/[0.12] z-0" />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">

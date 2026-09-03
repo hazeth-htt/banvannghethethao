@@ -473,7 +473,7 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
                     {[["Họ và tên", data.hoTen], ["MSSV", data.mssv], ["Email", data.email], ["SĐT", data.sdt], ["Mảng ứng tuyển", data.mang]].map(([k, v]) => (
                       <div key={k} className="flex gap-3 text-sm">
                         <span className="text-bvntt-muted font-normal w-28 flex-shrink-0">{k}:</span>
-                        <span className="text-bvntt-cream font-medium">{v || "—"}</span>
+                        <span className="text-bvntt-cream font-medium">{v || "-"}</span>
                       </div>
                     ))}
                   </div>
@@ -519,7 +519,7 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
       </main>
 
       <footer className="border-t border-white/[0.05] py-6 text-center text-[10px] tracking-widest uppercase text-white/20">
-        Ban Văn nghệ Thể thao — Đoàn ĐHBK Hà Nội
+        Ban Văn nghệ Thể thao - Đoàn ĐHBK Hà Nội
       </footer>
     </div>
   );
