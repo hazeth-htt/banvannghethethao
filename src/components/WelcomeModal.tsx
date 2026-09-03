@@ -57,13 +57,13 @@ export const WelcomeModal = ({
             />
           </div>
 
-          {/* Title: Unified League Gothic font */}
-          <div className="mb-4">
-            <h3 className="font-display uppercase tracking-normal leading-tight text-center">
-              <span className="block font-semibold text-sm sm:text-base md:text-lg text-bvntt-cream/75 tracking-widest mb-1">
+          {/* Title: Unified League Gothic font with airy spacing */}
+          <div className="mb-5 sm:mb-6">
+            <h3 className="font-display uppercase tracking-normal text-center flex flex-col items-center">
+              <span className="block font-semibold text-xs sm:text-sm md:text-base text-bvntt-cream/70 tracking-[0.18em] mb-2.5 sm:mb-3">
                 BẠN MUỐN TRỞ THÀNH THÀNH VIÊN CỦA
               </span>
-              <span className="block font-black text-3xl sm:text-4xl md:text-5xl text-bvntt-lilac drop-shadow-[0_0_25px_rgba(214,185,255,0.4)]">
+              <span className="block font-black text-3xl sm:text-4xl md:text-5xl text-bvntt-lilac drop-shadow-[0_0_25px_rgba(214,185,255,0.4)] leading-[1.1]">
                 BAN VĂN NGHỆ THỂ THAO?
               </span>
             </h3>
