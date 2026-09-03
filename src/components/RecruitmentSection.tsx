@@ -83,15 +83,16 @@ export const RecruitmentSection = ({ onOpenFormModal }: RecruitmentSectionProps)
                     }`} />
                 </div>
 
-                {/* Stage title: Dominant and prominent in League Gothic */}
-                <h3 className={`font-display text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal uppercase mb-1.5 ${stage.status === "active" ? "text-bvntt-lilac" : "text-bvntt-cream"
+                {/* Date: Dominant and prominent in League Gothic */}
+                <h3 className={`font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-normal uppercase mb-1.5 ${stage.status === "active" ? "text-bvntt-lilac" : "text-bvntt-cream"
                   }`}>
-                  {stage.title}
+                  {stage.date}
                 </h3>
 
-                {/* Date */}
-                <div className="font-display text-base sm:text-lg tracking-[0.06em] uppercase text-white/50 mb-2">
-                  {stage.date}
+                {/* Stage title */}
+                <div className={`font-display text-base sm:text-lg tracking-[0.08em] uppercase mb-2 ${stage.status === "active" ? "text-bvntt-lilac/90 font-semibold" : "text-white/60"
+                  }`}>
+                  {stage.title}
                 </div>
 
                 {/* Thin divider */}
