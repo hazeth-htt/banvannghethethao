@@ -322,6 +322,8 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
                         "Khoa Ngoại ngữ",
                         "Viện Đào tạo Quốc tế (TROY)",
                         "Khoa Khoa học và CNGD",
+                        "Trường Cao đẳng nghề",
+                        "Viện Đào tạo liên tục",
                         "Khác",
 
                       ]}
