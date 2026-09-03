@@ -29,3 +29,7 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Raw submission exports with private data
+*.csv
+
