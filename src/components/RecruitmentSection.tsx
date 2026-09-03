@@ -14,7 +14,7 @@ const stages: Stage[] = [
   {
     date: "01/09",
     title: "Mở đơn",
-    description: "Chính thức phát động đợt tuyển thành viên mới trên toàn trường",
+    description: "Chính thức phát động đợt tuyển thành viên mới trên toàn Đại học",
     status: "active",
   },
   {

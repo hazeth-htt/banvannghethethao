@@ -270,8 +270,8 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
               <div key={i} className="flex items-center">
                 <div className="flex flex-col items-center gap-1.5">
                   <div className={`w-6 h-6 rounded-full border flex items-center justify-center text-[9px] font-bold transition-all duration-300 ${s.done ? "border-bvntt-purple bg-bvntt-purple/30 text-bvntt-cream"
-                      : s.active ? "border-bvntt-lilac bg-bvntt-lilac/10 text-bvntt-lilac shadow-[0_0_12px_rgba(214,185,255,0.4)]"
-                        : "border-white/20 text-white/20"
+                    : s.active ? "border-bvntt-lilac bg-bvntt-lilac/10 text-bvntt-lilac shadow-[0_0_12px_rgba(214,185,255,0.4)]"
+                      : "border-white/20 text-white/20"
                     }`}>
                     {s.done ? "✓" : i + 1}
                   </div>
