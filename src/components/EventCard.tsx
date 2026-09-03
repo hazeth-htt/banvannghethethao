@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import { EventItem } from "../data/events";
 
 interface EventCardProps {
@@ -21,10 +20,10 @@ export const EventCard = ({ event, index, onSelect }: EventCardProps) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => onSelect(event)}
-      className="group relative flex-shrink-0 w-[80vw] max-w-[320px] sm:w-[340px] sm:max-w-none md:w-[380px] h-[430px] sm:h-[480px] md:h-[510px] snap-center cursor-pointer overflow-hidden bg-[#0a0514] border border-white/[0.06] hover:border-bvntt-lilac/40 transition-all duration-300 flex flex-col select-none"
+      className="group relative flex-shrink-0 w-[78vw] max-w-[300px] sm:w-[320px] sm:max-w-none md:w-[360px] snap-center cursor-pointer overflow-hidden bg-[#0a0514] border border-white/[0.06] hover:border-bvntt-lilac/40 transition-all duration-300 flex flex-col select-none"
     >
-      {/* ── Image block: Fixed uniform height for perfect alignment ── */}
-      <div className="relative w-full h-[250px] sm:h-[290px] md:h-[320px] flex-shrink-0 overflow-hidden bg-[#07040d]">
+      {/* ── Image block: Pure cover image without number tag ── */}
+      <div className="relative w-full h-[260px] sm:h-[290px] md:h-[320px] flex-shrink-0 overflow-hidden bg-[#07040d]">
         <motion.img
           src={event.coverImage}
           alt={event.title}
@@ -36,51 +35,24 @@ export const EventCard = ({ event, index, onSelect }: EventCardProps) => {
         {/* Subtle overlay */}
         <motion.div
           className="absolute inset-0 bg-black"
-          animate={{ opacity: hovered ? 0.18 : 0.06 }}
+          animate={{ opacity: hovered ? 0.15 : 0.05 }}
           transition={{ duration: 0.5 }}
         />
-
-        {/* Index number */}
-        <div className="absolute top-3 left-3 sm:top-4 sm:left-5 font-display text-[10px] font-semibold tracking-[0.2em] text-white/70 bg-black/40 px-2 sm:px-2.5 py-0.5 sm:py-1 backdrop-blur-sm border border-white/10">
-          0{index + 1}
-        </div>
       </div>
 
-      {/* ── Text block: Fixed flex-1, perfectly aligned across all cards ── */}
-      <div className="flex-1 p-4 sm:p-5 md:p-6 flex flex-col justify-between border-t border-white/[0.07] bg-[#0a0514]">
-        <div className="space-y-1.5 sm:space-y-2">
-          {/* Category */}
-          <div className="text-[10px] font-semibold tracking-[0.16em] uppercase text-bvntt-muted">
-            {event.category}
-          </div>
-
-          {/* Title */}
-          <motion.h3
-            className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-bvntt-cream leading-tight tracking-normal line-clamp-2"
-            animate={{ y: hovered ? -2 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {event.title}
-          </motion.h3>
-
-          {/* Time */}
-          <div className="text-xs text-bvntt-muted font-normal">
-            {event.timeframe}
-          </div>
+      {/* ── Minimalist Text block: Only Category & Title ── */}
+      <div className="p-4 sm:p-5 flex flex-col justify-center border-t border-white/[0.07] bg-[#0a0514] space-y-1 sm:space-y-1.5">
+        <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.16em] uppercase text-bvntt-lilac/80">
+          {event.category}
         </div>
 
-        {/* View CTA */}
-        <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
-          <span className="text-[11px] font-semibold tracking-[0.14em] uppercase text-bvntt-muted group-hover:text-bvntt-lilac transition-colors duration-300">
-            Xem sự kiện
-          </span>
-          <motion.div
-            animate={{ x: hovered ? 3 : 0, y: hovered ? -3 : 0 }}
-            transition={{ duration: 0.25 }}
-          >
-            <ArrowUpRight className="w-3.5 h-3.5 text-bvntt-muted group-hover:text-bvntt-lilac transition-colors duration-300" />
-          </motion.div>
-        </div>
+        <motion.h3
+          className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-bvntt-cream group-hover:text-bvntt-lilac transition-colors leading-tight tracking-normal line-clamp-2"
+          animate={{ y: hovered ? -2 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {event.title}
+        </motion.h3>
       </div>
     </motion.article>
   );

@@ -66,7 +66,7 @@ export const AllEventsModal = ({ isOpen, onClose, onSelectEvent, onViewDetail }:
           {/* Body: Grid of all events */}
           <div className="flex-1 overflow-y-auto p-6 sm:p-8 md:p-10 no-scrollbar">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {EVENTS_DATA.map((ev, i) => (
+              {EVENTS_DATA.map((ev) => (
                 <div
                   key={ev.id}
                   onClick={() => {
@@ -87,9 +87,6 @@ export const AllEventsModal = ({ isOpen, onClose, onSelectEvent, onViewDetail }:
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
-                    <div className="absolute top-3 left-3 font-display text-[10px] font-bold tracking-[0.16em] text-white/70 bg-black/50 px-2 py-0.5 border border-white/10 backdrop-blur-sm">
-                      0{i + 1}
-                    </div>
                   </div>
 
                   {/* Content */}
