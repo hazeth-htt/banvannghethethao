@@ -3,10 +3,17 @@ import { LogOut, Users, FileText, Download, Eye, Trash2, Shield, ChevronUp, Sear
 import { fetchSubmissions, deleteSubmission, Submission } from "../services/dbService";
 
 const ADMIN_PASSWORD = "bvntt2026"; // Change this in production
+const AUTH_KEY = "bvntt_admin_authenticated";
 
 // ── Admin Page ─────────────────────────────────────────────────────────────
 export const AdminPage = () => {
-  const [authed, setAuthed] = useState(false);
+  const [authed, setAuthed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem(AUTH_KEY) === "true";
+    } catch {
+      return false;
+    }
+  });
   const [pw, setPw] = useState("");
   const [pwError, setPwError] = useState(false);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -35,9 +42,20 @@ export const AdminPage = () => {
     if (pw === ADMIN_PASSWORD) {
       setAuthed(true);
       setPwError(false);
+      try {
+        localStorage.setItem(AUTH_KEY, "true");
+      } catch {}
     } else {
       setPwError(true);
     }
+  };
+
+  const handleLogout = () => {
+    setAuthed(false);
+    setPw("");
+    try {
+      localStorage.removeItem(AUTH_KEY);
+    } catch {}
   };
 
   const handleDelete = async (id: string) => {
@@ -143,7 +161,7 @@ export const AdminPage = () => {
               <button onClick={handleExportCSV} className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.1em] uppercase text-bvntt-muted hover:text-bvntt-cream border border-white/[0.1] hover:border-bvntt-lilac/40 px-4 py-2 transition-all duration-200 cursor-pointer">
                 <Download className="w-3.5 h-3.5" /> Xuất CSV
               </button>
-              <button onClick={() => { setAuthed(false); setPw(""); }} className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.1em] uppercase text-bvntt-muted hover:text-red-400 transition-colors cursor-pointer">
+              <button onClick={handleLogout} className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.1em] uppercase text-bvntt-muted hover:text-red-400 transition-colors cursor-pointer">
                 <LogOut className="w-3.5 h-3.5" /> Đăng xuất
               </button>
             </div>
