@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ArrowLeft, ArrowRight, CheckCircle, ChevronDown, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { submitApplication } from "../services/dbService";
 
@@ -100,31 +100,108 @@ const TextArea = ({ label, value, onChange, required, rows = 4, placeholder = ""
     />
   </div>
 );
-const SelectInput = ({ label, value, onChange, options, required, placeholder = "Chọn một mục" }: { label: string; value: string; onChange: (v: string) => void; options: string[]; required?: boolean; placeholder?: string }) => (
-  <div className="space-y-2">
-    <label className="block text-[11px] font-semibold tracking-[0.1em] uppercase text-bvntt-cream/80">
-      {label}{required && <span className="text-bvntt-lilac ml-1">*</span>}
-    </label>
-    <div className="relative">
-      <select
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        className={`w-full bg-white/[0.04] border border-white/[0.1] text-sm px-4 py-3 outline-none focus:border-bvntt-lilac/60 focus:bg-white/[0.06] transition-all duration-200 font-normal appearance-none pr-10 cursor-pointer ${value ? "text-bvntt-cream" : "text-white/30"
-          }`}
-      >
-        <option value="" disabled className="bg-[#07040d] text-white/40">{placeholder}</option>
-        {options.map(opt => (
-          <option key={opt} value={opt} className="bg-[#0d0919] text-bvntt-cream">{opt}</option>
-        ))}
-      </select>
-      <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/40">
-        <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
-          <path d="M1 1L6 6L11 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
+const SelectInput = ({
+  label,
+  value,
+  onChange,
+  options,
+  required,
+  placeholder = "Chọn một mục",
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  required?: boolean;
+  placeholder?: string;
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
+  return (
+    <div className="space-y-2 relative" ref={containerRef}>
+      <label className="block text-[11px] font-semibold tracking-[0.1em] uppercase text-bvntt-cream/80">
+        {label}{required && <span className="text-bvntt-lilac ml-1">*</span>}
+      </label>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className={`w-full text-left bg-white/[0.04] border ${
+            isOpen ? "border-bvntt-lilac/70 bg-white/[0.07] ring-1 ring-bvntt-lilac/30" : "border-white/[0.1] hover:border-white/20"
+          } text-sm px-4 py-3 outline-none transition-all duration-200 flex items-center justify-between cursor-pointer`}
+        >
+          <span className={`truncate font-normal ${value ? "text-bvntt-cream" : "text-white/30"}`}>
+            {value || placeholder}
+          </span>
+          <ChevronDown
+            className={`w-4 h-4 text-white/50 transition-transform duration-300 flex-shrink-0 ml-2 ${
+              isOpen ? "rotate-180 text-bvntt-lilac" : ""
+            }`}
+          />
+        </button>
+
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -6, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -6, scale: 0.98 }}
+              transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-[#0e081c]/95 border border-white/[0.14] backdrop-blur-xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] max-h-64 overflow-y-auto no-scrollbar py-1"
+            >
+              {options.map((opt) => {
+                const isSelected = value === opt;
+                return (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => {
+                      onChange(opt);
+                      setIsOpen(false);
+                    }}
+                    className={`w-full text-left px-4 py-2.5 text-xs sm:text-sm transition-all duration-150 flex items-center justify-between cursor-pointer ${
+                      isSelected
+                        ? "bg-bvntt-lilac/20 text-bvntt-cream font-medium"
+                        : "text-bvntt-muted hover:bg-bvntt-lilac/10 hover:text-bvntt-cream"
+                    }`}
+                  >
+                    <span className="truncate pr-2">{opt}</span>
+                    {isSelected && (
+                      <Check className="w-3.5 h-3.5 text-bvntt-lilac flex-shrink-0" />
+                    )}
+                  </button>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const RadioGroup = ({ label, value, onChange, options, required }: { label: string; value: string; onChange: (v: string) => void; options: string[]; required?: boolean }) => (
   <div className="space-y-3">
