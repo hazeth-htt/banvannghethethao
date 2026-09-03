@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { ArrowUpRight, Facebook, Mail, MapPin } from "lucide-react";
 import { SITE_CONFIG } from "../data/config";
 
@@ -108,13 +109,35 @@ export const Footer = () => {
 
         </div>
 
-        {/* Large footer closer text */}
-        <div className="py-12 md:py-16 overflow-hidden select-none">
-          <h2
-            className="font-display font-black tracking-tighter text-[12vw] md:text-[10vw] lg:text-[8vw] text-white/[0.04] hover:text-white/[0.07] transition-colors duration-700 leading-none uppercase cursor-default whitespace-nowrap"
-          >
-            TRÁCH NHIỆM - ĐAM MÊ - TỈ MẨN - SÁNG TẠO
-          </h2>
+        {/* Large footer marquee ticker */}
+        <div className="relative w-full py-10 md:py-14 overflow-hidden select-none -mx-6 sm:-mx-10 lg:-mx-16 px-0">
+          {/* Subtle fade masks at left & right */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-[#07040d] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-[#07040d] to-transparent z-10 pointer-events-none" />
+
+          <div className="flex w-max">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 28, ease: "linear", repeat: Infinity }}
+              className="flex items-center gap-8 md:gap-12 flex-shrink-0"
+            >
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-6 sm:gap-8 md:gap-12 font-display font-black tracking-tighter text-[11vw] sm:text-[9vw] md:text-[7vw] lg:text-[5.8rem] text-white/[0.05] hover:text-white/[0.12] transition-colors duration-500 uppercase cursor-default whitespace-nowrap leading-none"
+                >
+                  <span>TRÁCH NHIỆM</span>
+                  <span className="text-white/[0.03]">-</span>
+                  <span>ĐAM MÊ</span>
+                  <span className="text-white/[0.03]">-</span>
+                  <span>TỈ MẨN</span>
+                  <span className="text-white/[0.03]">-</span>
+                  <span>SÁNG TẠO</span>
+                  <span className="text-white/[0.03]">-</span>
+                </div>
+              ))}
+            </motion.div>
+          </div>
         </div>
 
         {/* Bottom copyright */}
