@@ -11,6 +11,7 @@ import { Footer } from "./components/Footer";
 import { ContactModal } from "./components/ContactModal";
 import { EventDetailPage } from "./components/EventDetailPage";
 import { MouseGradient } from "./components/MouseGradient";
+import { WelcomeModal } from "./components/WelcomeModal";
 
 const getSlugFromPath = () => {
   const pathname = window.location.pathname;
@@ -27,6 +28,7 @@ const getSlugFromPath = () => {
 };
 
 export function App() {
+  const [welcomeOpen, setWelcomeOpen] = useState(true);
   const [contactOpen, setContactOpen] = useState(false);
   const [activeEventSlug, setActiveEventSlug] = useState<string | null>(() => getSlugFromPath());
   const [showFormPage, setShowFormPage] = useState(() => window.location.pathname === "/form" || window.location.hash === "#form");
@@ -139,6 +141,21 @@ export function App() {
 
       {/* Contact Quick Modal */}
       <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
+
+      {/* Welcome Entry Popup Modal */}
+      <WelcomeModal
+        isOpen={welcomeOpen}
+        onClose={() => setWelcomeOpen(false)}
+        onLearnMore={() => {
+          setWelcomeOpen(false);
+          const elem = document.querySelector("#organization") || document.querySelector("#events");
+          elem?.scrollIntoView({ behavior: "smooth" });
+        }}
+        onRegisterNow={() => {
+          setWelcomeOpen(false);
+          handleOpenFormPage();
+        }}
+      />
     </div>
   );
 }
