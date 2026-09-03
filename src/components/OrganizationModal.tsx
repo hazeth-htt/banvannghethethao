@@ -85,19 +85,19 @@ export const OrganizationModal = ({ division, club = null, onClose, onRegisterCl
 
           {/* Body */}
           <div className="p-6 sm:p-8 space-y-6">
-            <p className="text-sm text-bvntt-muted leading-relaxed font-light">{data.description}</p>
+            <p className="text-sm text-bvntt-muted leading-relaxed font-normal text-justify">{data.description}</p>
 
             {isDivision && division?.tasks && (
               <div className="space-y-3 pt-4 border-t border-white/[0.06]">
                 <div className="section-label mb-4">Công việc cụ thể</div>
                 {division.tasks.map((t, i) => (
-                  <div key={i} className="flex items-start gap-3 py-3 border-b border-white/[0.04] text-sm text-bvntt-muted last:border-0">
-                    <span className="font-display text-xs font-bold text-bvntt-lilac/80 leading-none mt-1 w-5 flex-shrink-0">
+                  <div key={i} className="flex items-start gap-3.5 py-3 border-b border-white/[0.04] text-sm text-bvntt-muted last:border-0">
+                    <span className="font-display text-xs sm:text-sm font-bold text-bvntt-lilac/80 flex-shrink-0 w-5 tabular-nums pt-0.5 select-none">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <div>
-                      <div className="font-medium text-bvntt-cream mb-0.5">{t.title}</div>
-                      <div className="font-light leading-relaxed">{t.detail}</div>
+                    <div className="flex-1 text-justify">
+                      <strong className="font-medium text-bvntt-cream">{t.title}. </strong>
+                      <span className="font-light leading-relaxed">{t.detail}</span>
                     </div>
                   </div>
                 ))}

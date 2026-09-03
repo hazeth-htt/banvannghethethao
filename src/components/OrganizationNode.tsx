@@ -54,24 +54,27 @@ export const OrganizationNode = ({ division, index, onSelect }: OrganizationNode
             {division.role}
           </p>
 
-          {/* Short description */}
-          <p className="text-sm text-bvntt-muted leading-relaxed font-normal max-w-md">
-            {division.shortDesc}
-          </p>
+          {/* Unified Information Block: cleanly aligned, justified on both sides into one solid block */}
+          <div className="bg-[#0c0718]/60 border border-white/[0.08] p-5 sm:p-6 space-y-4 backdrop-blur-sm shadow-lg">
+            {/* Short description */}
+            <p className="text-sm text-bvntt-cream/90 leading-relaxed font-normal text-justify pb-3.5 border-b border-white/[0.06]">
+              {division.shortDesc}
+            </p>
 
-          {/* Tasks - numbered, no bullet icons */}
-          <div className="space-y-0 pt-2">
-            {division.tasks.slice(0, 3).map((t, i) => (
-              <div key={i} className="flex items-start gap-3 text-sm text-bvntt-muted py-3 border-b border-white/[0.05] last:border-0">
-                <span className="font-display text-xs font-bold text-white/30 leading-none mt-1 flex-shrink-0 w-5 tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <span className="text-bvntt-cream font-medium">{t.title}. </span>
-                  <span className="font-normal text-bvntt-muted">{t.detail}</span>
+            {/* Tasks list */}
+            <div className="space-y-3 divide-y divide-white/[0.05]">
+              {division.tasks.slice(0, 3).map((t, i) => (
+                <div key={i} className={`flex items-start gap-3.5 text-sm ${i > 0 ? "pt-3" : ""}`}>
+                  <span className="font-display text-xs sm:text-sm font-bold text-bvntt-lilac/80 flex-shrink-0 w-5 tabular-nums pt-0.5 select-none">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <p className="text-sm leading-relaxed text-bvntt-muted text-justify flex-1">
+                    <strong className="text-bvntt-cream font-medium">{t.title}. </strong>
+                    <span>{t.detail}</span>
+                  </p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* CTA - aligned to the right */}
