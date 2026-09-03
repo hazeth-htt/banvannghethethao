@@ -316,14 +316,14 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
                         "Trường Công nghệ Thông tin và Truyền thông",
                         "Trường Hóa và Khoa học sự sống",
                         "Trường Vật liệu",
-                        "Trường Công nghệ công nghiệp",
-                        "Trường Xây dựng và Môi trường",
                         "Khoa Toán - Tin",
                         "Khoa Vật lý kỹ thuật",
-                        "Khoa Kinh tế và Quản lý",
+                        "Trường Kinh tế",
                         "Khoa Ngoại ngữ",
                         "Viện Đào tạo Quốc tế (TROY)",
+                        "Khoa Khoa học và CNGD",
                         "Khác",
+
                       ]}
                     />
                     <TextInput label="Lớp" value={data.lop} onChange={set("lop")} required />
