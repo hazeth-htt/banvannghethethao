@@ -59,8 +59,20 @@ export const ClubCard = ({ club, index, onClick }: ClubCardProps) => {
         }}
         className="group relative w-full h-full flex items-center justify-center p-6 bg-[#0a0514] border border-white/[0.08] hover:border-bvntt-lilac/50 hover:bg-white/[0.02] transition-colors duration-300 cursor-pointer overflow-hidden select-none shadow-lg hover:shadow-[0_12px_32px_rgba(214,185,255,0.1)]"
       >
+        {/* Subtle background photo texture */}
+        {club.image && (
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <img
+              src={club.image}
+              alt=""
+              className="w-full h-full object-cover opacity-20 group-hover:opacity-40 group-hover:scale-105 transition-all duration-500 filter grayscale group-hover:grayscale-0"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0514] via-[#0a0514]/60 to-[#0a0514]/85" />
+          </div>
+        )}
+
         {/* Subtle top accent on hover */}
-        <div className="absolute top-0 inset-x-0 h-[2px] bg-bvntt-lilac opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute top-0 inset-x-0 h-[2px] bg-bvntt-lilac opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
 
         {/* Club Name with 3D Depth elevation */}
         <h4

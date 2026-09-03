@@ -57,31 +57,41 @@ export const OrganizationModal = ({ division, club = null, onClose, onRegisterCl
             </button>
           </div>
 
-          {/* Image */}
-          {isDivision && division?.gallery && division.gallery.length > 0 && (
-            <>
-              <div className="relative aspect-[16/9] overflow-hidden">
-                <motion.img
-                  key={activeImg}
-                  initial={{ opacity: 0, scale: 1.04 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  src={division.gallery[activeImg]}
-                  alt={division.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {division.gallery.length > 1 && (
-                <div className="flex gap-px border-b border-white/[0.07] overflow-x-auto no-scrollbar">
-                  {division.gallery.map((img, i) => (
-                    <button key={i} onClick={() => setActiveImg(i)} className={`flex-shrink-0 w-16 h-11 overflow-hidden transition-opacity ${activeImg === i ? "opacity-100" : "opacity-35 hover:opacity-60"}`}>
-                      <img src={img} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
+          {/* Image Gallery (for both Divisions and Clubs) */}
+          {(() => {
+            const gallery = isDivision ? division?.gallery : club?.gallery;
+            if (!gallery || gallery.length === 0) return null;
+            return (
+              <>
+                <div className="relative aspect-[16/9] overflow-hidden bg-[#07040d]">
+                  <motion.img
+                    key={activeImg}
+                    initial={{ opacity: 0, scale: 1.04 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    src={gallery[activeImg] || gallery[0]}
+                    alt={data.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              )}
-            </>
-          )}
+                {gallery.length > 1 && (
+                  <div className="flex gap-px border-b border-white/[0.07] overflow-x-auto no-scrollbar bg-black/40">
+                    {gallery.map((img, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setActiveImg(i)}
+                        className={`flex-shrink-0 w-16 h-11 overflow-hidden transition-all cursor-pointer ${
+                          activeImg === i ? "opacity-100 ring-1 ring-bvntt-lilac" : "opacity-40 hover:opacity-75"
+                        }`}
+                      >
+                        <img src={img} alt="" className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            );
+          })()}
 
           {/* Body */}
           <div className="p-6 sm:p-8 space-y-6">
