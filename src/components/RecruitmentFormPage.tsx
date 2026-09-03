@@ -309,12 +309,8 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-300" />
               <span className="text-[11px] font-medium tracking-[0.08em] uppercase">Quay lại</span>
             </button>
-            <a href="/" className="flex items-center gap-3">
-              <img src="/Logo Ban@4x.png" alt="Logo" className="w-8 h-11 object-contain" />
-              <div>
-                <div className="font-sans text-[11px] font-bold tracking-[0.06em] uppercase text-bvntt-cream leading-none">BAN VĂN NGHỆ THỂ THAO</div>
-                <div className="font-sans text-[9px] tracking-[0.08em] uppercase text-bvntt-muted leading-none mt-1">Đoàn Thanh niên Đại học Bách khoa Hà Nội</div>
-              </div>
+            <a href="/" className="flex items-center justify-center hover:opacity-80 transition-opacity">
+              <img src="/Logo Ban@4x.png" alt="Logo Ban Văn nghệ Thể thao" className="w-8 h-11 object-contain" />
             </a>
             <div className="w-24" />
           </div>
