@@ -59,15 +59,17 @@ export const ClubCard = ({ club, index, onClick }: ClubCardProps) => {
         }}
         className="group relative w-full h-full flex items-center justify-center p-6 bg-[#0a0514] border border-white/[0.08] hover:border-bvntt-lilac/50 hover:bg-white/[0.02] transition-colors duration-300 cursor-pointer overflow-hidden select-none shadow-lg hover:shadow-[0_12px_32px_rgba(214,185,255,0.1)]"
       >
-        {/* Subtle background photo texture */}
+        {/* Background photo with 50% opacity & black-purple gradient overlay */}
         {club.image && (
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <img
               src={club.image}
               alt=""
-              className="w-full h-full object-cover opacity-20 group-hover:opacity-40 group-hover:scale-105 transition-all duration-500 filter grayscale group-hover:grayscale-0"
+              className="w-full h-full object-cover opacity-50 group-hover:opacity-65 group-hover:scale-105 transition-all duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0514] via-[#0a0514]/60 to-[#0a0514]/85" />
+            {/* Black-purple gradient overlay for depth & text contrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080312]/90 via-[#2a0b4d]/55 to-[#080312]/80 group-hover:via-[#380e66]/45 transition-colors duration-500" />
+            <div className="absolute inset-0 bg-black/20" />
           </div>
         )}
 
