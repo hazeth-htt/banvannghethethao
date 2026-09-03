@@ -58,9 +58,9 @@ export const WelcomeModal = ({
           </div>
 
           {/* Title: Inter bold for top line, League Gothic for BAN VĂN NGHỆ THỂ THAO? */}
-          <div className="mb-7 sm:mb-8">
+          <div className="mb-4 sm:mb-5">
             <h3 className="uppercase tracking-normal text-center flex flex-col items-center">
-              <span className="block font-sans font-bold text-xs sm:text-sm tracking-[0.14em] text-bvntt-cream/80 mb-2 sm:mb-2.5">
+              <span className="block font-sans font-bold text-xs sm:text-sm tracking-[0.14em] text-white mb-2 sm:mb-2.5">
                 BẠN MUỐN TRỞ THÀNH THÀNH VIÊN CỦA
               </span>
               <span className="block font-display font-black text-3xl sm:text-4xl md:text-5xl text-bvntt-lilac drop-shadow-[0_0_25px_rgba(214,185,255,0.4)] leading-[1.1]">
@@ -68,6 +68,11 @@ export const WelcomeModal = ({
               </span>
             </h3>
           </div>
+
+          {/* Subtitle */}
+          <p className="text-xs sm:text-sm text-bvntt-muted font-normal tracking-wide max-w-sm mx-auto mb-7">
+            Look here now, Văn nghệ Thể thao chiến.
+          </p>
 
           {/* Two Buttons: Tìm hiểu thêm & Đăng ký ngay */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
