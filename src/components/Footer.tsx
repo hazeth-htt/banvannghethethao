@@ -35,42 +35,69 @@ export const Footer = () => {
             </p>
           </div>
 
-          {/* Navigation */}
+          {/* 7 Câu lạc bộ trực thuộc - 1 dòng mỗi CLB */}
           <div className="space-y-4">
-            <div className="section-label">Khám phá</div>
-            <ul className="space-y-2.5 text-xs text-bvntt-muted font-light">
+            <div className="section-label">7 CLB trực thuộc</div>
+            <ul className="space-y-2 text-xs text-bvntt-muted font-light">
               {[
-                { label: "Trang chủ", href: "#hero" },
-                { label: "Sự kiện nổi bật", href: "#events" },
-                { label: "Mảng chuyên môn", href: "#organization" },
-                { label: "7 Câu lạc bộ", href: "#organization" },
-                { label: "Tuyển thành viên 2026", href: "#recruitment" },
-              ].map((l) => (
-                <li key={l.href}>
+                { name: "D.O.P", role: "Nhảy" },
+                { name: "Glee BK", role: "Âm nhạc" },
+                { name: "EMCEE", role: "MC" },
+                { name: "BeU", role: "Múa" },
+                { name: "D.A.S", role: "Kịch" },
+                { name: "HBC", role: "Bóng rổ" },
+                { name: "HRO", role: "Bóng chày" },
+              ].map((c) => (
+                <li key={c.name}>
                   <button
-                    onClick={() => scrollTo(l.href)}
-                    className="hover:text-bvntt-cream transition-colors duration-200"
+                    onClick={() => scrollTo("#organization")}
+                    className="hover:text-bvntt-cream transition-colors duration-200 text-left flex items-center gap-1.5 cursor-pointer"
                   >
-                    {l.label}
+                    <span className="font-medium text-bvntt-cream/90">{c.name}</span>
+                    <span className="text-white/35">({c.role})</span>
                   </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Mảng */}
+          {/* 4 Mảng chuyên môn */}
           <div className="space-y-4">
             <div className="section-label">4 Mảng chuyên môn</div>
-            <ul className="space-y-2 text-xs text-bvntt-muted font-light">
-              <li>01. Mảng Tổ chức</li>
-              <li>02. Mảng Truyền thông</li>
-              <li>03. Mảng Media - Design</li>
-              <li>04. Mảng Đối ngoại</li>
+            <ul className="space-y-2.5 text-xs text-bvntt-muted font-light">
+              <li>
+                <button
+                  onClick={() => scrollTo("#organization")}
+                  className="hover:text-bvntt-cream transition-colors duration-200 text-left cursor-pointer"
+                >
+                  01. Mảng Tổ chức
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => scrollTo("#organization")}
+                  className="hover:text-bvntt-cream transition-colors duration-200 text-left cursor-pointer"
+                >
+                  02. Mảng Truyền thông
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => scrollTo("#organization")}
+                  className="hover:text-bvntt-cream transition-colors duration-200 text-left cursor-pointer"
+                >
+                  03. Mảng Media - Design
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => scrollTo("#organization")}
+                  className="hover:text-bvntt-cream transition-colors duration-200 text-left cursor-pointer"
+                >
+                  04. Mảng Đối ngoại
+                </button>
+              </li>
             </ul>
-            <div className="section-label mt-4 pt-4 border-t border-white/[0.05]">7 CLB trực thuộc</div>
-            <p className="text-[11px] text-bvntt-muted font-light leading-relaxed">
-              D.O.P · GleeBK · BeU · D.A.S · Emcee · HRO · HBC
-            </p>
           </div>
 
           {/* Contact */}
