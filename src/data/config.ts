@@ -5,7 +5,8 @@ export const SITE_CONFIG = {
   description: "Ban Văn nghệ Thể thao — Đoàn Đại học Bách khoa Hà Nội. Nơi khơi nguồn đam mê, thắp sáng tài năng và lưu giữ những khoảnh khắc thanh xuân rực rỡ nhất dưới mái trường Bách khoa.",
   facebookUrl: "https://www.facebook.com/bvnttbkhn",
   recruitmentFormUrl: "https://forms.gle/bvntt-tuyen-thanh-vien-2026",
-  email: "vannghethethao.hust@gmail.com",
+  googleScriptUrl: "", // Dán link Web App Google Apps Script vào đây khi triển khai
+  email: "banvnttbkhn@gmail.com",
   phone: "024 3869 2222",
   address: "Phòng 102 Nhà D3-5, Đại học Bách khoa Hà Nội, Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội",
   recruitment: {
