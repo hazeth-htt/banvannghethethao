@@ -43,19 +43,19 @@ export const Hero = ({ onRegisterClick }: HeroProps) => {
       </div>
 
       {/* ── Centered Content ── */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-12 pt-16 pb-6 md:pt-20 md:pb-8 max-w-5xl mx-auto w-full space-y-3 sm:space-y-4 md:space-y-5">
-        {/* Main Title: VĂN NGHỆ on top, THỂ THAO below - Dominant & Responsive */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-12 pt-16 pb-6 md:pt-20 md:pb-8 max-w-6xl mx-auto w-full space-y-3 sm:space-y-4 md:space-y-5">
+        {/* Main Title: Horizontal on desktop, stacked on mobile - No overlapping diacritics */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="w-full"
         >
-          <h1 className="font-display uppercase text-center leading-[0.86] tracking-normal select-none">
-            <span className="block text-[13.5vw] sm:text-[11.5vw] md:text-[9.5vw] lg:text-[9.5rem] xl:text-[11.2rem] text-bvntt-cream">
+          <h1 className="font-display uppercase text-center select-none flex flex-col md:flex-row items-center justify-center gap-y-1.5 sm:gap-y-2 md:gap-y-0 md:gap-x-4 lg:gap-x-6 tracking-normal">
+            <span className="text-[14vw] sm:text-[12vw] md:text-[6.2vw] lg:text-[6.8rem] xl:text-[8rem] text-bvntt-cream leading-[1.05] md:leading-none whitespace-nowrap">
               VĂN NGHỆ
             </span>
-            <span className="block text-[13.5vw] sm:text-[11.5vw] md:text-[9.5vw] lg:text-[9.5rem] xl:text-[11.2rem] text-bvntt-lilac">
+            <span className="text-[14vw] sm:text-[12vw] md:text-[6.2vw] lg:text-[6.8rem] xl:text-[8rem] text-bvntt-lilac leading-[1.05] md:leading-none whitespace-nowrap">
               THỂ THAO
             </span>
           </h1>
