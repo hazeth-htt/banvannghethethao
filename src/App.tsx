@@ -3,6 +3,7 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Marquee } from "./components/Marquee";
 import { EventsSection } from "./components/EventsSection";
+import { ValuesMarquee } from "./components/ValuesMarquee";
 import { OrganizationTimeline } from "./components/OrganizationTimeline";
 import { RecruitmentSection } from "./components/RecruitmentSection";
 import { RecruitmentFormPage } from "./components/RecruitmentFormPage";
@@ -128,6 +129,9 @@ export function App() {
 
         {/* Section 03: Events Horizontal Showcase */}
         <EventsSection onNavigateToEvent={navigateToEvent} />
+
+        {/* Section 03.5: Values Marquee (Trách nhiệm - Đam mê - Tỉ mẩn - Sáng tạo) */}
+        <ValuesMarquee />
 
         {/* Section 04: Organization Vertical Timeline & Clubs */}
         <OrganizationTimeline onRegisterClick={handleScrollToRecruitment} />
