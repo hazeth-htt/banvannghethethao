@@ -169,7 +169,7 @@ export const EventDetailPage = ({ slug, onBack, onNavigateToSlug }: EventDetailP
               <div className="p-6 bg-[#07040d] border border-white/[0.06] space-y-2">
                 <div className="text-[10px] tracking-[0.14em] uppercase text-bvntt-muted">Đơn vị chủ trì & thực hiện</div>
                 <div className="font-display text-sm font-semibold uppercase text-bvntt-cream">
-                  Ban Văn nghệ Thể thao - Đoàn Đại học Bách khoa Hà Nội
+                  Ban Văn nghệ Thể thao - Đoàn Thanh niên Đại học Bách khoa Hà Nội
                 </div>
                 <p className="text-xs text-bvntt-muted font-normal pt-1">
                   Đồng hành cùng các mảng chuyên môn và các câu lạc bộ trực thuộc kiến tạo sân khấu.

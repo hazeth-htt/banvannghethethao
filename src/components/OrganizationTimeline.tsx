@@ -70,7 +70,7 @@ export const OrganizationTimeline = ({ onRegisterClick }: OrganizationTimelinePr
                   BAN VĂN NGHỆ THỂ THAO
                 </h3>
                 <p className="font-sans font-normal text-xs sm:text-sm text-bvntt-muted tracking-wide mt-1.5 text-center">
-                  Đoàn Đại học Bách khoa Hà Nội
+                  Đoàn Thanh niên Đại học Bách khoa Hà Nội
                 </p>
               </div>
             </div>

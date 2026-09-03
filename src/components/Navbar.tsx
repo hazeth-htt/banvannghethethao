@@ -57,7 +57,7 @@ export const Navbar = ({ onOpenContact: _onOpenContact }: NavbarProps) => {
                   BAN VĂN NGHỆ THỂ THAO
                 </div>
                 <div className="font-sans text-[9px] md:text-[10px] tracking-[0.08em] uppercase text-bvntt-muted leading-none mt-1">
-                  Đoàn thanh niên Đại học Bách khoa Hà Nội
+                  Đoàn Thanh niên Đại học Bách khoa Hà Nội
                 </div>
               </div>
             </a>

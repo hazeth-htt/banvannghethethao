@@ -236,7 +236,7 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
               <img src="/Logo Ban@4x.png" alt="Logo" className="w-8 h-11 object-contain" />
               <div>
                 <div className="font-sans text-[11px] font-bold tracking-[0.06em] uppercase text-bvntt-cream leading-none">BAN VĂN NGHỆ THỂ THAO</div>
-                <div className="font-sans text-[9px] tracking-[0.08em] uppercase text-bvntt-muted leading-none mt-1">Đoàn thanh niên ĐHBK Hà Nội</div>
+                <div className="font-sans text-[9px] tracking-[0.08em] uppercase text-bvntt-muted leading-none mt-1">Đoàn Thanh niên Đại học Bách khoa Hà Nội</div>
               </div>
             </a>
             <div className="w-24" />
@@ -331,7 +331,7 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
                     <TextInput label="Link Facebook cá nhân" value={data.facebook} onChange={set("facebook")} required placeholder="https://facebook.com/..." />
                     <TextInput label="Email cá nhân" value={data.email} onChange={set("email")} required placeholder="example@mail.com" />
                   </div>
-                  <TextArea label="Bạn biết gì về Ban Văn nghệ Thể thao - Đoàn Thanh niên ĐHBK Hà Nội?" value={data.bietGi} onChange={set("bietGi")} required rows={4} />
+                  <TextArea label="Bạn biết gì về Ban Văn nghệ Thể thao - Đoàn Thanh niên Đại học Bách khoa Hà Nội?" value={data.bietGi} onChange={set("bietGi")} required rows={4} />
                   <TextArea label="Lý do bạn muốn ứng tuyển vào Ban Văn nghệ Thể thao?" value={data.lyDo} onChange={set("lyDo")} required rows={4} />
                   <div className="pt-4 flex justify-end">
                     <button onClick={() => setStep("division_select")}
@@ -519,7 +519,7 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
       </main>
 
       <footer className="border-t border-white/[0.05] py-6 text-center text-[10px] tracking-widest uppercase text-white/20">
-        Ban Văn nghệ Thể thao - Đoàn ĐHBK Hà Nội
+        Ban Văn nghệ Thể thao - Đoàn Thanh niên Đại học Bách khoa Hà Nội
       </footer>
     </div>
   );

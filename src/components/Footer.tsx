@@ -25,7 +25,7 @@ export const Footer = () => {
                   Ban Văn nghệ Thể thao
                 </div>
                 <div className="text-[10px] tracking-[0.08em] uppercase text-bvntt-muted">
-                  Đoàn Đhbk Hà Nội
+                  Đoàn Thanh niên Đại học Bách khoa Hà Nội
                 </div>
               </div>
             </div>
@@ -119,7 +119,7 @@ export const Footer = () => {
 
         {/* Bottom copyright */}
         <div className="border-t border-white/[0.05] py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] text-bvntt-muted tracking-[0.06em]">
-          <span>© {year} Ban Văn nghệ Thể thao - Đoàn Đại học Bách khoa Hà Nội</span>
+          <span>© {year} Ban Văn nghệ Thể thao - Đoàn Thanh niên Đại học Bách khoa Hà Nội</span>
           <span className="text-white/30">Được xây dựng với tâm huyết cho sinh viên HUST</span>
         </div>
 

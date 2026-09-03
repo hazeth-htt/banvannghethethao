@@ -21,7 +21,7 @@ export const CLUBS_DATA: ClubItem[] = [
     color: "#D6B9FF",
     tag: "Choreography / Street Dance / Kpop Cover",
     shortDesc: "Ngôi nhà chung của những bạn trẻ mang niềm đam mê nhiệt huyết với vũ đạo, tỏa sáng và gắn kết tuổi trẻ qua từng bước nhảy.",
-    description: "Câu lạc bộ Nhảy D.O.P trực thuộc Ban Văn Nghệ Thể Thao - Đoàn Đại học Bách Khoa Hà Nội là ngôi nhà chung của những bạn trẻ mang niềm đam mê nhiệt huyết với vũ đạo. Không chỉ là nơi tập luyện, nâng cao kỹ năng qua các thể loại đa dạng, D.O.P còn là tập thể năng động luôn hết mình góp mặt trong các sự kiện, chương trình lớn của Nhà trường. Đây chính là môi trường lý tưởng để sinh viên Bách Khoa thỏa sức thể hiện cá tính, sự tự tin và gắn kết tuổi trẻ qua từng bước nhảy.",
+    description: "Câu lạc bộ Nhảy D.O.P trực thuộc Ban Văn Nghệ Thể Thao - Đoàn Thanh niên Đại học Bách khoa Hà Nội là ngôi nhà chung của những bạn trẻ mang niềm đam mê nhiệt huyết với vũ đạo. Không chỉ là nơi tập luyện, nâng cao kỹ năng qua các thể loại đa dạng, D.O.P còn là tập thể năng động luôn hết mình góp mặt trong các sự kiện, chương trình lớn của Nhà trường. Đây chính là môi trường lý tưởng để sinh viên Bách Khoa thỏa sức thể hiện cá tính, sự tự tin và gắn kết tuổi trẻ qua từng bước nhảy.",
     highlights: [
       "Góp mặt trong các sự kiện, chương trình lớn của Nhà trường",
       "Môi trường tập luyện, nâng cao kỹ năng vũ đạo đa dạng",
@@ -37,7 +37,7 @@ export const CLUBS_DATA: ClubItem[] = [
     color: "#6A00FF",
     tag: "Vocal / Acoustic / Band / Harmonies",
     shortDesc: "Nơi thắp sáng niềm đam mê ca hát và nghệ thuật, mang những giai điệu trẻ trung làm bừng sáng các sân khấu Bách Khoa.",
-    description: "Là ngôi nhà của những tâm hồn đồng điệu với âm nhạc, câu lạc bộ Âm nhạc Glee BK trực thuộc Ban Văn Nghệ Thể Thao - Đoàn Đại học Bách Khoa Hà Nội là nơi thắp sáng niềm đam mê ca hát và nghệ thuật của các bạn sinh viên. Đến với Glee BK, các thành viên không chỉ cùng nhau luyện thanh, hòa giọng mà còn mang những giai điệu trẻ trung, tươi mới làm bừng sáng các sân khấu và sự kiện lớn của Nhà trường. Đây chính là mảnh ghép tuyệt vời để tuổi trẻ Bách Khoa cất cao tiếng hát, sống trọn đam mê và sẻ chia những khoảnh khắc đáng nhớ.",
+    description: "Là ngôi nhà của những tâm hồn đồng điệu với âm nhạc, câu lạc bộ Âm nhạc Glee BK trực thuộc Ban Văn Nghệ Thể Thao - Đoàn Thanh niên Đại học Bách khoa Hà Nội là nơi thắp sáng niềm đam mê ca hát và nghệ thuật của các bạn sinh viên. Đến với Glee BK, các thành viên không chỉ cùng nhau luyện thanh, hòa giọng mà còn mang những giai điệu trẻ trung, tươi mới làm bừng sáng các sân khấu và sự kiện lớn của Nhà trường. Đây chính là mảnh ghép tuyệt vời để tuổi trẻ Bách Khoa cất cao tiếng hát, sống trọn đam mê và sẻ chia những khoảnh khắc đáng nhớ.",
     highlights: [
       "Luyện thanh, hòa giọng và biểu diễn tại các sự kiện lớn của Trường",
       "Mảnh ghép gắn kết những tâm hồn đồng điệu với âm nhạc",
