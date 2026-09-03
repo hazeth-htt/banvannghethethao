@@ -10,6 +10,7 @@ import { AdminPage } from "./components/AdminPage";
 import { Footer } from "./components/Footer";
 import { ContactModal } from "./components/ContactModal";
 import { EventDetailPage } from "./components/EventDetailPage";
+import { MouseGradient } from "./components/MouseGradient";
 
 const getSlugFromPath = () => {
   const pathname = window.location.pathname;
@@ -109,6 +110,9 @@ export function App() {
 
   return (
     <div className="relative min-h-screen bg-[#07040d] text-white selection:bg-bvntt-lilac selection:text-black overflow-x-clip">
+      {/* Ambient Cursor-following Violet Glow */}
+      <MouseGradient />
+
       {/* Global Navbar */}
       <Navbar onOpenContact={() => setContactOpen(true)} />
 
