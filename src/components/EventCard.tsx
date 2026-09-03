@@ -21,10 +21,10 @@ export const EventCard = ({ event, index, onSelect }: EventCardProps) => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => onSelect(event)}
-      className="group relative flex-shrink-0 w-[280px] sm:w-[340px] md:w-[380px] h-[520px] cursor-pointer overflow-hidden bg-[#0a0514] border border-white/[0.06] hover:border-white/[0.16] transition-colors duration-300 flex flex-col"
+      className="group relative flex-shrink-0 w-[80vw] max-w-[320px] sm:w-[340px] sm:max-w-none md:w-[380px] h-[430px] sm:h-[480px] md:h-[510px] snap-center cursor-pointer overflow-hidden bg-[#0a0514] border border-white/[0.06] hover:border-bvntt-lilac/40 transition-all duration-300 flex flex-col select-none"
     >
       {/* ── Image block: Fixed uniform height for perfect alignment ── */}
-      <div className="relative w-full h-[320px] flex-shrink-0 overflow-hidden bg-[#07040d]">
+      <div className="relative w-full h-[250px] sm:h-[290px] md:h-[320px] flex-shrink-0 overflow-hidden bg-[#07040d]">
         <motion.img
           src={event.coverImage}
           alt={event.title}
@@ -41,14 +41,14 @@ export const EventCard = ({ event, index, onSelect }: EventCardProps) => {
         />
 
         {/* Index number */}
-        <div className="absolute top-4 left-5 font-display text-[10px] font-semibold tracking-[0.2em] text-white/70 bg-black/40 px-2.5 py-1 backdrop-blur-sm border border-white/10">
+        <div className="absolute top-3 left-3 sm:top-4 sm:left-5 font-display text-[10px] font-semibold tracking-[0.2em] text-white/70 bg-black/40 px-2 sm:px-2.5 py-0.5 sm:py-1 backdrop-blur-sm border border-white/10">
           0{index + 1}
         </div>
       </div>
 
       {/* ── Text block: Fixed flex-1, perfectly aligned across all cards ── */}
-      <div className="flex-1 p-5 md:p-6 flex flex-col justify-between border-t border-white/[0.07] bg-[#0a0514]">
-        <div className="space-y-2">
+      <div className="flex-1 p-4 sm:p-5 md:p-6 flex flex-col justify-between border-t border-white/[0.07] bg-[#0a0514]">
+        <div className="space-y-1.5 sm:space-y-2">
           {/* Category */}
           <div className="text-[10px] font-semibold tracking-[0.16em] uppercase text-bvntt-muted">
             {event.category}
@@ -56,7 +56,7 @@ export const EventCard = ({ event, index, onSelect }: EventCardProps) => {
 
           {/* Title */}
           <motion.h3
-            className="font-display text-2xl sm:text-3xl font-bold text-bvntt-cream leading-tight tracking-normal line-clamp-2"
+            className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-bvntt-cream leading-tight tracking-normal line-clamp-2"
             animate={{ y: hovered ? -2 : 0 }}
             transition={{ duration: 0.3 }}
           >

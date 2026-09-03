@@ -92,18 +92,39 @@ export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
         onScroll={handleScroll}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth cursor-grab active:cursor-grabbing px-6 md:px-12"
+        onTouchStart={() => setIsHovered(true)}
+        onTouchEnd={() => {
+          setTimeout(() => setIsHovered(false), 4000);
+        }}
+        className="flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-pl-6 sm:scroll-pl-8 md:scroll-pl-12 cursor-grab active:cursor-grabbing px-6 sm:px-8 md:px-12 py-2"
       >
         {EVENTS_DATA.map((ev, i) => (
           <EventCard key={ev.id} event={ev} index={i} onSelect={setSelected} />
         ))}
       </div>
 
+      {/* ── Slide indicators & Navigation Controls ── */}
+      <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-16 mt-6 flex items-center justify-between">
+        {/* Indicators */}
+        <div className="flex items-center gap-1.5 mx-auto">
+          {EVENTS_DATA.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollToIndex(i)}
+              aria-label={`Chuyển đến sự kiện ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                indexRef.current === i ? "w-8 bg-bvntt-lilac" : "w-1.5 bg-white/20 hover:bg-white/40"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
       {/* ── "Xem tất cả" CTA button ── */}
-      <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-16 mt-10 md:mt-14 flex items-center justify-center">
+      <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-16 mt-8 md:mt-12 flex items-center justify-center">
         <button
           onClick={() => setShowAllEvents(true)}
-          className="inline-flex items-center gap-2.5 text-xs font-semibold tracking-[0.12em] uppercase text-bvntt-cream border border-bvntt-border-md bg-white/[0.04] px-7 py-3 hover:border-bvntt-lilac hover:text-bvntt-lilac hover:bg-bvntt-lilac/10 transition-all duration-300 backdrop-blur-sm"
+          className="inline-flex items-center gap-2.5 text-xs font-semibold tracking-[0.12em] uppercase text-bvntt-cream border border-bvntt-border-md bg-white/[0.04] px-7 py-3 hover:border-bvntt-lilac hover:text-bvntt-lilac hover:bg-bvntt-lilac/10 transition-all duration-300 backdrop-blur-sm cursor-pointer"
         >
           <span>Xem tất cả sự kiện</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -124,6 +145,7 @@ export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
         onSelectEvent={(ev) => {
           setSelected(ev);
         }}
+        onViewDetail={onNavigateToEvent}
       />
     </section>
   );

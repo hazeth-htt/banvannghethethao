@@ -7,9 +7,10 @@ interface AllEventsModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSelectEvent: (event: EventItem) => void;
+  onViewDetail?: (slug: string) => void;
 }
 
-export const AllEventsModal = ({ isOpen, onClose, onSelectEvent }: AllEventsModalProps) => {
+export const AllEventsModal = ({ isOpen, onClose, onSelectEvent, onViewDetail }: AllEventsModalProps) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -70,7 +71,11 @@ export const AllEventsModal = ({ isOpen, onClose, onSelectEvent }: AllEventsModa
                   key={ev.id}
                   onClick={() => {
                     onClose();
-                    onSelectEvent(ev);
+                    if (onViewDetail) {
+                      onViewDetail(ev.slug || ev.id);
+                    } else {
+                      onSelectEvent(ev);
+                    }
                   }}
                   className="group bg-[#07040d] border border-white/[0.07] hover:border-bvntt-lilac/40 transition-all duration-300 cursor-pointer flex flex-col overflow-hidden"
                 >
