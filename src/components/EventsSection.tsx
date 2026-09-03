@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { EVENTS_DATA, EventItem } from "../data/events";
 import { EventCard } from "./EventCard";
 import { EventModal } from "./EventModal";
@@ -35,13 +35,23 @@ export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
     }
   };
 
-  // Autoplay: auto advances to the next slide every 4.5s unless hovered/modal open
+  const scrollPrev = () => {
+    const prev = (indexRef.current - 1 + EVENTS_DATA.length) % EVENTS_DATA.length;
+    scrollToIndex(prev);
+  };
+
+  const scrollNext = () => {
+    const next = (indexRef.current + 1) % EVENTS_DATA.length;
+    scrollToIndex(next);
+  };
+
+  // Autoplay: auto advances to the next slide every 5s unless hovered/modal open
   useEffect(() => {
     if (isHovered || showAllEvents || selected !== null) return;
     const timer = setInterval(() => {
       const next = (indexRef.current + 1) % EVENTS_DATA.length;
       scrollToIndex(next);
-    }, 4500);
+    }, 5000);
     return () => clearInterval(timer);
   }, [isHovered, showAllEvents, selected]);
 
@@ -86,36 +96,40 @@ export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
         </div>
       </div>
 
-      {/* Auto-scrolling carousel track */}
-      <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onTouchStart={() => setIsHovered(true)}
-        onTouchEnd={() => {
-          setTimeout(() => setIsHovered(false), 4000);
-        }}
-        className="flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-pl-6 sm:scroll-pl-8 md:scroll-pl-12 cursor-grab active:cursor-grabbing px-6 sm:px-8 md:px-12 py-2"
-      >
-        {EVENTS_DATA.map((ev, i) => (
-          <EventCard key={ev.id} event={ev} index={i} onSelect={setSelected} />
-        ))}
-      </div>
+      {/* Auto-scrolling carousel track with floating side navigation buttons */}
+      <div className="relative w-full">
+        {/* Left chevron button */}
+        <button
+          onClick={scrollPrev}
+          aria-label="Sự kiện trước"
+          className="absolute left-2 sm:left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0b0616]/85 hover:bg-[#0b0616] border border-white/20 hover:border-bvntt-lilac text-white/80 hover:text-bvntt-cream flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-300 cursor-pointer group active:scale-95"
+        >
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 group-hover:-translate-x-0.5 transition-transform" />
+        </button>
 
-      {/* ── Slide indicators & Navigation Controls ── */}
-      <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-16 mt-6 flex items-center justify-between">
-        {/* Indicators */}
-        <div className="flex items-center gap-1.5 mx-auto">
-          {EVENTS_DATA.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollToIndex(i)}
-              aria-label={`Chuyển đến sự kiện ${i + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                indexRef.current === i ? "w-8 bg-bvntt-lilac" : "w-1.5 bg-white/20 hover:bg-white/40"
-              }`}
-            />
+        {/* Right chevron button */}
+        <button
+          onClick={scrollNext}
+          aria-label="Sự kiện tiếp theo"
+          className="absolute right-2 sm:right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#0b0616]/85 hover:bg-[#0b0616] border border-white/20 hover:border-bvntt-lilac text-white/80 hover:text-bvntt-cream flex items-center justify-center backdrop-blur-md shadow-2xl transition-all duration-300 cursor-pointer group active:scale-95"
+        >
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-0.5 transition-transform" />
+        </button>
+
+        {/* Carousel track */}
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onTouchStart={() => setIsHovered(true)}
+          onTouchEnd={() => {
+            setTimeout(() => setIsHovered(false), 5000);
+          }}
+          className="flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-pl-6 sm:scroll-pl-8 md:scroll-pl-12 cursor-grab active:cursor-grabbing px-6 sm:px-8 md:px-12 py-2"
+        >
+          {EVENTS_DATA.map((ev, i) => (
+            <EventCard key={ev.id} event={ev} index={i} onSelect={setSelected} />
           ))}
         </div>
       </div>

@@ -31,7 +31,7 @@ export const Hero = ({ onRegisterClick }: HeroProps) => {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           poster="/assets/events/chao-tan/564597581_792333290330953_1181562350669538861_n.jpg"
         >
           <source src="/hero-video.mp4" type="video/mp4" />
