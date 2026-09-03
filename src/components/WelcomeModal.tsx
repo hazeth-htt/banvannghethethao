@@ -60,7 +60,7 @@ export const WelcomeModal = ({
           {/* Title: Unified League Gothic font */}
           <div className="mb-4">
             <h3 className="font-display uppercase tracking-normal leading-tight text-center">
-              <span className="block font-bold text-xl sm:text-2xl md:text-3xl text-bvntt-cream tracking-wide mb-1">
+              <span className="block font-semibold text-sm sm:text-base md:text-lg text-bvntt-cream/75 tracking-widest mb-1">
                 BẠN MUỐN TRỞ THÀNH THÀNH VIÊN CỦA
               </span>
               <span className="block font-black text-3xl sm:text-4xl md:text-5xl text-bvntt-lilac drop-shadow-[0_0_25px_rgba(214,185,255,0.4)]">
@@ -70,9 +70,14 @@ export const WelcomeModal = ({
           </div>
 
           {/* Subtitle */}
-          <p className="text-xs sm:text-sm text-bvntt-muted font-normal leading-relaxed max-w-sm mx-auto mb-7">
-            Nơi khơi nguồn đam mê, thắp sáng tài năng và cùng tạo nên những dấu ấn rực rỡ nhất của tuổi trẻ Bách khoa.
-          </p>
+          <div className="text-xs sm:text-sm leading-relaxed max-w-sm mx-auto mb-7 space-y-0.5">
+            <p className="text-bvntt-cream/85 font-normal">
+              Đạp sóng gió. Hiện thực hóa chiêm bao
+            </p>
+            <p className="text-bvntt-lilac/90 font-medium">
+              Look here now, Văn nghệ Thể thao chiến.
+            </p>
+          </div>
 
           {/* Two Buttons: Tìm hiểu thêm & Đăng ký ngay */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
