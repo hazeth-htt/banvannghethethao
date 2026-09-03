@@ -16,6 +16,42 @@ export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [selected, setSelected] = useState<EventItem | null>(null);
   const [showAllEvents, setShowAllEvents] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const startScrollLeftRef = useRef(0);
+  const hasDraggedRef = useRef(false);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    isDraggingRef.current = true;
+    setIsDragging(true);
+    hasDraggedRef.current = false;
+    startXRef.current = e.pageX - scrollRef.current.offsetLeft;
+    startScrollLeftRef.current = scrollRef.current.scrollLeft;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingRef.current || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
+    if (Math.abs(walk) > 5) {
+      hasDraggedRef.current = true;
+    }
+    scrollRef.current.scrollLeft = startScrollLeftRef.current - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    isDraggingRef.current = false;
+    setIsDragging(false);
+  };
+
+  const handleSelectEvent = (ev: EventItem) => {
+    if (hasDraggedRef.current) return;
+    setSelected(ev);
+  };
 
   const scrollToIndex = (index: number) => {
     if (!scrollRef.current) return;
@@ -120,16 +156,24 @@ export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
           onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          onMouseLeave={() => {
+            setIsHovered(false);
+            handleMouseUpOrLeave();
+          }}
           onTouchStart={() => setIsHovered(true)}
           onTouchEnd={() => {
             setTimeout(() => setIsHovered(false), 5000);
           }}
-          className="flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-pl-6 sm:scroll-pl-8 md:scroll-pl-12 cursor-grab active:cursor-grabbing px-6 sm:px-8 md:px-12 py-2"
+          className={`flex gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-pl-6 sm:scroll-pl-8 md:scroll-pl-12 px-6 sm:px-8 md:px-12 py-2 touch-pan-y overscroll-x-contain select-none ${
+            isDragging ? "cursor-grabbing scroll-auto" : "cursor-grab snap-x snap-proximity"
+          }`}
         >
           {EVENTS_DATA.map((ev, i) => (
-            <EventCard key={ev.id} event={ev} index={i} onSelect={setSelected} />
+            <EventCard key={ev.id} event={ev} index={i} onSelect={handleSelectEvent} />
           ))}
         </div>
       </div>
