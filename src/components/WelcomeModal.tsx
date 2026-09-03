@@ -57,13 +57,15 @@ export const WelcomeModal = ({
             />
           </div>
 
-          {/* Title: Prominent, focused Ban Văn nghệ Thể thao */}
+          {/* Title: Unified League Gothic font */}
           <div className="mb-4">
-            <p className="text-xs sm:text-sm tracking-[0.08em] uppercase text-bvntt-cream/70 font-medium mb-1.5">
-              Bạn muốn trở thành thành viên của
-            </p>
-            <h3 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-bvntt-lilac uppercase tracking-normal leading-tight drop-shadow-[0_0_24px_rgba(214,185,255,0.35)]">
-              Ban Văn nghệ Thể thao?
+            <h3 className="font-display uppercase tracking-normal leading-tight text-center">
+              <span className="block font-bold text-xl sm:text-2xl md:text-3xl text-bvntt-cream tracking-wide mb-1">
+                BẠN MUỐN TRỞ THÀNH THÀNH VIÊN CỦA
+              </span>
+              <span className="block font-black text-3xl sm:text-4xl md:text-5xl text-bvntt-lilac drop-shadow-[0_0_25px_rgba(214,185,255,0.4)]">
+                BAN VĂN NGHỆ THỂ THAO?
+              </span>
             </h3>
           </div>
 
