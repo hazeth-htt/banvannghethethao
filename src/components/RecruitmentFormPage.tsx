@@ -331,8 +331,8 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
               alt="Cover Ban Văn nghệ Thể thao"
               className="w-full h-full object-cover object-center opacity-70"
             />
-            {/* Dark & Purple gradient overlay to maintain text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#07040d]/60 via-purple-950/25 to-[#07040d]/90" />
+            {/* Gradient runs from bottom (purple) to top (dark background #07040d) */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#3b1261]/75 via-[#1b0a2e]/55 to-[#07040d]/90" />
           </div>
 
           {/* Ambient Purple Glow */}
