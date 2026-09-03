@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Gothic&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --c-bg: #07040d;
+    --c-surface: #0d0919;
+    --c-purple: #6A00FF;
+    --c-purple-dim: #330177;
+    --c-lilac: #D6B9FF;
+    --c-white: #f5f2ee;
+    --c-muted: rgba(245, 242, 238, 0.6);
+    --c-border: rgba(245, 242, 238, 0.08);
+    --c-border-strong: rgba(245, 242, 238, 0.15);
+  }
+
+  html {
+    background-color: var(--c-bg);
+    color: var(--c-white);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  /* Refined scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #07040d; }
+  ::-webkit-scrollbar-thumb { background: #2a1555; }
+  ::-webkit-scrollbar-thumb:hover { background: #6A00FF; }
+
+  * { box-sizing: border-box; }
+}
+
+/* ─── Noise Overlay ─── */
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ─── Typography System: League Gothic (Titles) & Inter Regular (Content) ─── */
+.font-display,
+.font-editorial {
+  font-family: 'League Gothic', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.font-sans {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+}
+
+/* Clean headline with League Gothic */
+.headline-xl {
+  font-family: 'League Gothic', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+/* ─── No-scrollbar ─── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─── Image Cinematic Reveal ─── */
+.img-reveal {
+  overflow: hidden;
+}
+
+.img-reveal img {
+  transform: scale(1.06);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-reveal:hover img,
+.img-reveal.revealed img {
+  transform: scale(1);
+}
+
+/* ─── Thin horizontal divider ─── */
+.divider-h {
+  width: 100%;
+  height: 1px;
+  background: var(--c-border);
+}
+
+/* ─── Editorial link hover ─── */
+.link-editorial {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  position: relative;
+  color: var(--c-white);
+}
+
+.link-editorial::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--c-lilac);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-editorial:hover::after {
+  width: 100%;
+}
+
+/* ─── Section label ─── */
+.section-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+/* ─── Purple accent bar ─── */
+.accent-bar {
+  width: 1.5rem;
+  height: 2px;
+  background: #6A00FF;
+  flex-shrink: 0;
+}
+
+/* ─── Club editorial grid ─── */
+.clubs-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5px;
+}
+
