@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { X, Check, AlertCircle, Pin } from "lucide-react";
 import { ContentPost, PostCategory } from "../../services/contentService";
+import { SingleImageUploader } from "./SingleImageUploader";
 
 interface PostEditModalProps {
   isOpen: boolean;
@@ -201,29 +202,13 @@ export const PostEditModal = ({ isOpen, onClose, onSave, postToEdit }: PostEditM
             </div>
           </div>
 
-          {/* Cover Image URL */}
-          <div className="space-y-1.5">
-            <label className="block font-semibold uppercase tracking-wider text-white/70">Ảnh bài viết (URL)</label>
-            <input
-              type="text"
-              value={formData.coverImage}
-              onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
-              placeholder="/assets/events/... hoặc URL ảnh https://..."
-              className="w-full bg-white/[0.04] border border-white/[0.1] px-3.5 py-2.5 text-sm text-white focus:border-bvntt-lilac outline-none transition font-mono text-xs"
-            />
-            {formData.coverImage && (
-              <div className="relative w-full h-32 bg-black/40 border border-white/[0.08] overflow-hidden rounded mt-2">
-                <img
-                  src={formData.coverImage}
-                  alt="Cover preview"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = "none";
-                  }}
-                />
-              </div>
-            )}
-          </div>
+          {/* Cover Image */}
+          <SingleImageUploader
+            label="Ảnh bài viết"
+            value={formData.coverImage || ""}
+            onChange={(url) => setFormData({ ...formData, coverImage: url })}
+            aspectRatio="banner"
+          />
 
           {/* Excerpt */}
           <div className="space-y-1.5">

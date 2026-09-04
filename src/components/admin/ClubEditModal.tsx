@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { X, Check, ExternalLink, Link2 } from "lucide-react";
 import { ContentClub } from "../../services/contentService";
+import { SingleImageUploader } from "./SingleImageUploader";
+import { ImageGalleryManager } from "./ImageGalleryManager";
 
 interface ClubEditModalProps {
   isOpen: boolean;
@@ -14,7 +16,10 @@ export const ClubEditModal = ({ isOpen, onClose, onSave, clubToEdit }: ClubEditM
 
   useEffect(() => {
     if (clubToEdit) {
-      setFormData({ ...clubToEdit });
+      setFormData({
+        ...clubToEdit,
+        gallery: clubToEdit.gallery?.length ? [...clubToEdit.gallery] : [],
+      });
     }
   }, [clubToEdit, isOpen]);
 
@@ -25,19 +30,20 @@ export const ClubEditModal = ({ isOpen, onClose, onSave, clubToEdit }: ClubEditM
     onSave({
       ...clubToEdit,
       ...formData,
+      gallery: formData.gallery?.filter((g) => g && g.trim()) || [],
     } as ContentClub);
     onClose();
   };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-xl my-8 bg-[#0e0a17] border border-white/[0.12] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-2xl my-8 bg-[#0e0a17] border border-white/[0.12] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.08] bg-white/[0.02]">
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-bvntt-lilac animate-pulse" />
             <h2 className="font-display font-bold text-lg uppercase tracking-wider text-bvntt-cream">
-              Cập nhật Tuyển sinh: {clubToEdit.name}
+              Cập nhật CLB: {clubToEdit.name}
             </h2>
           </div>
           <button
@@ -51,9 +57,9 @@ export const ClubEditModal = ({ isOpen, onClose, onSave, clubToEdit }: ClubEditM
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-5 flex-1 text-xs">
           <div className="flex items-center gap-4 p-3 bg-white/[0.03] border border-white/[0.06] rounded">
-            {clubToEdit.image && (
+            {formData.image && (
               <img
-                src={clubToEdit.image}
+                src={formData.image}
                 alt={clubToEdit.name}
                 className="w-14 h-14 object-cover rounded border border-white/10"
               />
@@ -129,17 +135,22 @@ export const ClubEditModal = ({ isOpen, onClose, onSave, clubToEdit }: ClubEditM
             />
           </div>
 
-          {/* Banner Image URL */}
-          <div className="space-y-1.5">
-            <label className="block font-semibold uppercase tracking-wider text-white/70">Đường dẫn ảnh đại diện</label>
-            <input
-              type="text"
-              value={formData.image || ""}
-              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-              placeholder="/assets/clubs/..."
-              className="w-full bg-white/[0.04] border border-white/[0.1] px-3.5 py-2 text-xs text-white focus:border-bvntt-lilac outline-none font-mono"
-            />
-          </div>
+          {/* Avatar / Main Image */}
+          <SingleImageUploader
+            label="Ảnh đại diện CLB"
+            value={formData.image || ""}
+            onChange={(url) => setFormData({ ...formData, image: url })}
+            aspectRatio="square"
+          />
+
+          {/* Club Photos Gallery */}
+          <ImageGalleryManager
+            label="Bộ sưu tập ảnh hoạt động CLB"
+            images={formData.gallery || []}
+            onChange={(imgs) => setFormData({ ...formData, gallery: imgs })}
+            onSetAsCover={(imgUrl) => setFormData({ ...formData, image: imgUrl })}
+            coverImage={formData.image}
+          />
 
           {/* Footer Actions */}
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/[0.08]">

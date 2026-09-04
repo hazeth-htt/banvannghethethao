@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { X, Image as ImageIcon, Plus, Trash2, Check, AlertCircle } from "lucide-react";
+import { X, Plus, Trash2, Check, AlertCircle } from "lucide-react";
 import { ContentEvent } from "../../services/contentService";
+import { SingleImageUploader } from "./SingleImageUploader";
+import { ImageGalleryManager } from "./ImageGalleryManager";
 
 interface EventEditModalProps {
   isOpen: boolean;
@@ -25,7 +27,6 @@ export const EventEditModal = ({ isOpen, onClose, onSave, eventToEdit }: EventEd
   });
 
   const [highlightInput, setHighlightInput] = useState("");
-  const [galleryInput, setGalleryInput] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -88,22 +89,6 @@ export const EventEditModal = ({ isOpen, onClose, onSave, eventToEdit }: EventEd
     setFormData((prev) => ({
       ...prev,
       highlights: prev.highlights?.filter((_, i) => i !== idx),
-    }));
-  };
-
-  const handleAddGalleryUrl = () => {
-    if (!galleryInput.trim()) return;
-    setFormData((prev) => ({
-      ...prev,
-      gallery: [...(prev.gallery || []), galleryInput.trim()],
-    }));
-    setGalleryInput("");
-  };
-
-  const handleRemoveGalleryUrl = (idx: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      gallery: prev.gallery?.filter((_, i) => i !== idx),
     }));
   };
 
@@ -241,35 +226,12 @@ export const EventEditModal = ({ isOpen, onClose, onSave, eventToEdit }: EventEd
           </div>
 
           {/* Cover Image */}
-          <div className="space-y-2">
-            <label className="block font-semibold uppercase tracking-wider text-white/70">
-              Đường dẫn Ảnh bìa (Cover Image URL)
-            </label>
-            <div className="flex gap-3 items-center">
-              <input
-                type="text"
-                value={formData.coverImage}
-                onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
-                placeholder="/assets/events/... hoặc https://..."
-                className="flex-1 bg-white/[0.04] border border-white/[0.1] px-3.5 py-2.5 text-sm text-white focus:border-bvntt-lilac outline-none transition"
-              />
-            </div>
-            {formData.coverImage && (
-              <div className="relative w-full h-36 bg-black/40 border border-white/[0.08] overflow-hidden rounded flex items-center justify-center">
-                <img
-                  src={formData.coverImage}
-                  alt="Xem trước ảnh bìa"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = "none";
-                  }}
-                />
-                <span className="absolute bottom-2 right-2 bg-black/70 px-2 py-0.5 rounded text-[10px] text-white/70">
-                  Xem trước ảnh bìa
-                </span>
-              </div>
-            )}
-          </div>
+          <SingleImageUploader
+            label="Ảnh bìa sự kiện (Cover Image)"
+            value={formData.coverImage || ""}
+            onChange={(url) => setFormData({ ...formData, coverImage: url })}
+            aspectRatio="video"
+          />
 
           {/* Short Description */}
           <div className="space-y-1.5">
@@ -350,56 +312,14 @@ export const EventEditModal = ({ isOpen, onClose, onSave, eventToEdit }: EventEd
             </div>
           </div>
 
-          {/* Gallery URLs */}
-          <div className="space-y-2">
-            <label className="block font-semibold uppercase tracking-wider text-white/70">Bộ sưu tập ảnh (Gallery)</label>
-            <div className="space-y-2">
-              {formData.gallery?.map((url, idx) => (
-                <div key={idx} className="flex items-center gap-2">
-                  <ImageIcon className="w-3.5 h-3.5 text-bvntt-lilac flex-shrink-0" />
-                  <input
-                    type="text"
-                    value={url}
-                    onChange={(e) => {
-                      const updated = [...(formData.gallery || [])];
-                      updated[idx] = e.target.value;
-                      setFormData({ ...formData, gallery: updated });
-                    }}
-                    className="flex-1 bg-white/[0.03] border border-white/[0.08] px-3 py-1.5 text-xs text-white focus:border-bvntt-lilac outline-none font-mono"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveGalleryUrl(idx)}
-                    className="p-1.5 text-white/40 hover:text-red-400 transition"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              ))}
-              <div className="flex gap-2 pt-1">
-                <input
-                  type="text"
-                  placeholder="Đường dẫn ảnh: /assets/events/... hoặc URL"
-                  value={galleryInput}
-                  onChange={(e) => setGalleryInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      handleAddGalleryUrl();
-                    }
-                  }}
-                  className="flex-1 bg-white/[0.04] border border-white/[0.1] px-3 py-1.5 text-xs text-white focus:border-bvntt-lilac outline-none font-mono"
-                />
-                <button
-                  type="button"
-                  onClick={handleAddGalleryUrl}
-                  className="flex items-center gap-1 bg-white/[0.08] hover:bg-white/[0.15] text-white px-3 py-1.5 text-xs font-medium transition cursor-pointer"
-                >
-                  <Plus className="w-3.5 h-3.5" /> Thêm ảnh
-                </button>
-              </div>
-            </div>
-          </div>
+          {/* Gallery Manager */}
+          <ImageGalleryManager
+            label="Bộ sưu tập ảnh sự kiện (Gallery)"
+            images={formData.gallery?.filter((g) => g && g.trim()) || []}
+            onChange={(imgs) => setFormData({ ...formData, gallery: imgs })}
+            onSetAsCover={(imgUrl) => setFormData({ ...formData, coverImage: imgUrl })}
+            coverImage={formData.coverImage}
+          />
 
           {/* Footer Actions */}
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/[0.08]">
