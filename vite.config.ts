@@ -14,6 +14,83 @@ function neonDevApiPlugin() {
 
       server.middlewares.use(async (req: any, res: any, next: any) => {
         const url = new URL(req.url, 'http://localhost')
+
+        // ── Handle /api/content ──
+        if (url.pathname === '/api/content') {
+          res.setHeader('Content-Type', 'application/json')
+          res.setHeader('Access-Control-Allow-Origin', '*')
+          res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+          res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
+          if (req.method === 'OPTIONS') {
+            res.statusCode = 200
+            return res.end()
+          }
+
+          try {
+            await sql`
+              CREATE TABLE IF NOT EXISTS bvntt_content (
+                key VARCHAR(64) PRIMARY KEY,
+                data JSONB NOT NULL,
+                updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+              );
+            `
+
+            if (req.method === 'GET') {
+              const key = url.searchParams.get('key')
+              if (key) {
+                const rows = await sql`SELECT data, updated_at as "updatedAt" FROM bvntt_content WHERE key = ${key} LIMIT 1;`
+                res.statusCode = 200
+                if (rows.length === 0) {
+                  return res.end(JSON.stringify({ found: false, data: null }))
+                }
+                return res.end(JSON.stringify({ found: true, data: rows[0].data, updatedAt: rows[0].updatedAt }))
+              }
+
+              const allRows = await sql`SELECT key, data FROM bvntt_content;`
+              const result: Record<string, any> = {}
+              for (const row of allRows) {
+                result[row.key] = row.data
+              }
+              res.statusCode = 200
+              return res.end(JSON.stringify(result))
+            }
+
+            if (req.method === 'POST') {
+              let body = ''
+              req.on('data', (chunk: any) => (body += chunk))
+              req.on('end', async () => {
+                try {
+                  const payload = JSON.parse(body)
+                  const { key, data } = payload || {}
+                  if (!key || data === undefined) {
+                    res.statusCode = 400
+                    return res.end(JSON.stringify({ error: 'Missing key or data' }))
+                  }
+                  await sql`
+                    INSERT INTO bvntt_content (key, data, updated_at)
+                    VALUES (${key}, ${JSON.stringify(data)}::jsonb, NOW())
+                    ON CONFLICT (key) DO UPDATE
+                    SET data = EXCLUDED.data, updated_at = NOW();
+                  `
+                  res.statusCode = 200
+                  return res.end(JSON.stringify({ success: true, key }))
+                } catch (e: any) {
+                  res.statusCode = 500
+                  return res.end(JSON.stringify({ error: e.message }))
+                }
+              })
+              return
+            }
+
+            res.statusCode = 405
+            return res.end(JSON.stringify({ error: 'Method not allowed' }))
+          } catch (err: any) {
+            res.statusCode = 500
+            return res.end(JSON.stringify({ error: err.message }))
+          }
+        }
+
         if (url.pathname !== '/api/submissions') return next()
 
         res.setHeader('Content-Type', 'application/json')

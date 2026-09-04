@@ -13,6 +13,7 @@ import { ContactModal } from "./components/ContactModal";
 import { EventDetailPage } from "./components/EventDetailPage";
 import { MouseGradient } from "./components/MouseGradient";
 import { WelcomeModal } from "./components/WelcomeModal";
+import { fetchContentFromDatabase } from "./services/contentService";
 
 const getSlugFromPath = () => {
   const pathname = window.location.pathname;
@@ -36,6 +37,9 @@ export function App() {
   const [showAdminPage, setShowAdminPage] = useState(() => window.location.pathname === "/admin" || window.location.hash === "#admin");
 
   useEffect(() => {
+    // Tự động tải nội dung mới nhất từ Neon Database về
+    fetchContentFromDatabase();
+
     const handleLocationChange = () => {
       setActiveEventSlug(getSlugFromPath());
       setShowFormPage(window.location.pathname === "/form" || window.location.hash === "#form");

@@ -124,6 +124,69 @@ export const DEFAULT_RECRUITMENT: RecruitmentSettings = {
   stages: SITE_CONFIG.recruitment.stages.map((s) => ({ ...s })),
 };
 
+// ── Database Sync Functions ───────────────────────────────────────────────
+
+/**
+ * Gửi cập nhật lên Neon Database qua /api/content
+ */
+export async function pushContentToDatabase(key: string, data: any): Promise<boolean> {
+  try {
+    const res = await fetch("/api/content", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key, data }),
+    });
+    return res.ok;
+  } catch (err) {
+    console.warn(`Không thể đồng bộ [${key}] lên Neon Database:`, err);
+    return false;
+  }
+}
+
+/**
+ * Tải toàn bộ nội dung từ Neon Database về và đồng bộ vào localStorage
+ */
+export async function fetchContentFromDatabase(): Promise<boolean> {
+  try {
+    const res = await fetch("/api/content");
+    if (!res.ok) return false;
+    const all = await res.json();
+    if (!all || typeof all !== "object") return false;
+
+    let hasUpdate = false;
+    if (Array.isArray(all.events) && all.events.length > 0) {
+      localStorage.setItem(KEYS.EVENTS, JSON.stringify(all.events));
+      hasUpdate = true;
+    }
+    if (Array.isArray(all.posts)) {
+      localStorage.setItem(KEYS.POSTS, JSON.stringify(all.posts));
+      hasUpdate = true;
+    }
+    if (Array.isArray(all.clubs) && all.clubs.length > 0) {
+      localStorage.setItem(KEYS.CLUBS, JSON.stringify(all.clubs));
+      hasUpdate = true;
+    }
+    if (all.recruitment && typeof all.recruitment === "object") {
+      localStorage.setItem(KEYS.RECRUITMENT, JSON.stringify(all.recruitment));
+      hasUpdate = true;
+    }
+
+    if (hasUpdate) {
+      notifyUpdated();
+    } else if (!all.events) {
+      // Nếu Database Neon còn trống (mới tạo bảng), tự động nạp dữ liệu chuẩn ban đầu lên Neon
+      pushContentToDatabase("events", DEFAULT_EVENTS);
+      pushContentToDatabase("posts", DEFAULT_POSTS);
+      pushContentToDatabase("clubs", DEFAULT_CLUBS);
+      pushContentToDatabase("recruitment", DEFAULT_RECRUITMENT);
+    }
+    return true;
+  } catch (err) {
+    console.warn("Không thể fetch content từ Neon Database:", err);
+    return false;
+  }
+}
+
 // ── Service Functions ──────────────────────────────────────────────────────
 
 // 1. Events
@@ -147,6 +210,7 @@ export const saveStoredEvents = (events: ContentEvent[]): void => {
   } catch (e) {
     console.warn("Error saving stored events", e);
   }
+  pushContentToDatabase("events", events);
 };
 
 // 2. Posts (News & Announcements)
@@ -170,6 +234,7 @@ export const saveStoredPosts = (posts: ContentPost[]): void => {
   } catch (e) {
     console.warn("Error saving stored posts", e);
   }
+  pushContentToDatabase("posts", posts);
 };
 
 // 3. Clubs
@@ -193,6 +258,7 @@ export const saveStoredClubs = (clubs: ContentClub[]): void => {
   } catch (e) {
     console.warn("Error saving stored clubs", e);
   }
+  pushContentToDatabase("clubs", clubs);
 };
 
 // 4. Recruitment Settings
@@ -216,10 +282,11 @@ export const saveStoredRecruitment = (settings: RecruitmentSettings): void => {
   } catch (e) {
     console.warn("Error saving stored recruitment", e);
   }
+  pushContentToDatabase("recruitment", settings);
 };
 
 // 5. Global Backup & Reset
-export const resetContentToDefault = (): void => {
+export const resetContentToDefault = async (): Promise<void> => {
   try {
     localStorage.removeItem(KEYS.EVENTS);
     localStorage.removeItem(KEYS.POSTS);
@@ -229,6 +296,12 @@ export const resetContentToDefault = (): void => {
   } catch (e) {
     console.warn("Error resetting content", e);
   }
+  await Promise.all([
+    pushContentToDatabase("events", DEFAULT_EVENTS),
+    pushContentToDatabase("posts", DEFAULT_POSTS),
+    pushContentToDatabase("clubs", DEFAULT_CLUBS),
+    pushContentToDatabase("recruitment", DEFAULT_RECRUITMENT),
+  ]);
 };
 
 export const exportContentDataJSON = (): string => {
@@ -243,14 +316,26 @@ export const exportContentDataJSON = (): string => {
   return JSON.stringify(data, null, 2);
 };
 
-export const importContentDataJSON = (jsonStr: string): boolean => {
+export const importContentDataJSON = async (jsonStr: string): Promise<boolean> => {
   try {
     const data = JSON.parse(jsonStr);
     if (data && typeof data === "object") {
-      if (Array.isArray(data.events)) localStorage.setItem(KEYS.EVENTS, JSON.stringify(data.events));
-      if (Array.isArray(data.posts)) localStorage.setItem(KEYS.POSTS, JSON.stringify(data.posts));
-      if (Array.isArray(data.clubs)) localStorage.setItem(KEYS.CLUBS, JSON.stringify(data.clubs));
-      if (data.recruitment) localStorage.setItem(KEYS.RECRUITMENT, JSON.stringify(data.recruitment));
+      if (Array.isArray(data.events)) {
+        localStorage.setItem(KEYS.EVENTS, JSON.stringify(data.events));
+        pushContentToDatabase("events", data.events);
+      }
+      if (Array.isArray(data.posts)) {
+        localStorage.setItem(KEYS.POSTS, JSON.stringify(data.posts));
+        pushContentToDatabase("posts", data.posts);
+      }
+      if (Array.isArray(data.clubs)) {
+        localStorage.setItem(KEYS.CLUBS, JSON.stringify(data.clubs));
+        pushContentToDatabase("clubs", data.clubs);
+      }
+      if (data.recruitment) {
+        localStorage.setItem(KEYS.RECRUITMENT, JSON.stringify(data.recruitment));
+        pushContentToDatabase("recruitment", data.recruitment);
+      }
       notifyUpdated();
       return true;
     }

@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { fetchSubmissions, deleteSubmission, Submission } from "../services/dbService";
 import { ContentManager } from "./admin/ContentManager";
+import { fetchContentFromDatabase } from "../services/contentService";
 
 const ADMIN_PASSWORD = "bvntt2026"; // Change this in production
 const AUTH_KEY = "bvntt_admin_authenticated";
@@ -196,6 +197,21 @@ export const AdminPage = () => {
                     <Download className="w-3.5 h-3.5" /> Xuất CSV
                   </button>
                 </>
+              )}
+              {mainTab === "content" && (
+                <button
+                  onClick={async () => {
+                    setLoading(true);
+                    await fetchContentFromDatabase();
+                    setLoading(false);
+                  }}
+                  disabled={loading}
+                  className="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.1em] uppercase text-bvntt-muted hover:text-bvntt-cream border border-white/[0.1] hover:border-bvntt-lilac/40 px-3 py-2 transition-all duration-200 cursor-pointer disabled:opacity-50"
+                  title="Tải lại dữ liệu mới nhất từ Neon Database"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-bvntt-lilac" : ""}`} />
+                  <span className="hidden sm:inline">{loading ? "Đang đồng bộ..." : "Đồng bộ Neon"}</span>
+                </button>
               )}
               <button
                 onClick={handleLogout}

@@ -199,22 +199,25 @@ export const ContentManager = () => {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       const content = event.target?.result as string;
-      if (content && importContentDataJSON(content)) {
-        refreshData();
-        showToast("Đã nhập dữ liệu cấu hình thành công!");
-      } else {
-        alert("Tệp JSON không hợp lệ.");
+      if (content) {
+        const ok = await importContentDataJSON(content);
+        if (ok) {
+          refreshData();
+          showToast("Đã nhập dữ liệu cấu hình thành công!");
+        } else {
+          alert("Tệp JSON không hợp lệ.");
+        }
       }
     };
     reader.readAsText(file);
     e.target.value = "";
   };
 
-  const handleResetDefaults = () => {
+  const handleResetDefaults = async () => {
     if (confirm("Khôi phục toàn bộ nội dung (Sự kiện, Tin tức, CLB, Cài đặt) về dữ liệu mặc định của Ban?")) {
-      resetContentToDefault();
+      await resetContentToDefault();
       refreshData();
       showToast("Đã khôi phục toàn bộ nội dung về mặc định!");
     }
