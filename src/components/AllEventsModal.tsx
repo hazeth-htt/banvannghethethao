@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, Calendar, Tag } from "lucide-react";
 import { EVENTS_DATA, EventItem } from "../data/events";
+import { getStoredEvents, CONTENT_UPDATED_EVENT } from "../services/contentService";
 
 interface AllEventsModalProps {
   isOpen: boolean;
@@ -11,6 +12,19 @@ interface AllEventsModalProps {
 }
 
 export const AllEventsModal = ({ isOpen, onClose, onSelectEvent, onViewDetail }: AllEventsModalProps) => {
+  const [eventsList, setEventsList] = useState<EventItem[]>(() => {
+    const stored = getStoredEvents().filter((e) => e.status !== "draft");
+    return stored.length > 0 ? stored : EVENTS_DATA;
+  });
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      const stored = getStoredEvents().filter((e) => e.status !== "draft");
+      setEventsList(stored.length > 0 ? stored : EVENTS_DATA);
+    };
+    window.addEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+    return () => window.removeEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+  }, []);
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -66,7 +80,7 @@ export const AllEventsModal = ({ isOpen, onClose, onSelectEvent, onViewDetail }:
           {/* Body: Grid of all events */}
           <div className="flex-1 overflow-y-auto p-6 sm:p-8 md:p-10 no-scrollbar">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {EVENTS_DATA.map((ev) => (
+              {eventsList.map((ev) => (
                 <div
                   key={ev.id}
                   onClick={() => {
@@ -124,7 +138,7 @@ export const AllEventsModal = ({ isOpen, onClose, onSelectEvent, onViewDetail }:
 
           {/* Footer */}
           <div className="px-6 py-4 sm:px-8 border-t border-white/[0.08] bg-[#0d071a] flex items-center justify-between text-xs text-bvntt-muted">
-            <span>Tổng cộng {EVENTS_DATA.length} sự kiện lớn thường niên</span>
+            <span>Tổng cộng {eventsList.length} sự kiện lớn thường niên</span>
             <button
               onClick={onClose}
               className="px-4 py-2 border border-white/10 hover:border-white/25 text-bvntt-cream text-xs font-semibold tracking-wide uppercase transition-colors"

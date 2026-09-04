@@ -1,7 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { DIVISIONS_DATA, DivisionItem } from "../data/divisions";
 import { CLUBS_DATA, ClubItem } from "../data/clubs";
+import { getStoredClubs, CONTENT_UPDATED_EVENT } from "../services/contentService";
 import { OrganizationNode } from "./OrganizationNode";
 import { OrganizationModal } from "./OrganizationModal";
 import { ClubCard } from "./ClubCard";
@@ -12,6 +13,20 @@ interface OrganizationTimelineProps {
 }
 
 export const OrganizationTimeline = ({ onRegisterClick }: OrganizationTimelineProps) => {
+  const [clubsList, setClubsList] = useState<ClubItem[]>(() => {
+    const stored = getStoredClubs();
+    return stored.length > 0 ? stored : CLUBS_DATA;
+  });
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      const stored = getStoredClubs();
+      setClubsList(stored.length > 0 ? stored : CLUBS_DATA);
+    };
+    window.addEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+    return () => window.removeEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+  }, []);
+
   const [selectedDiv, setSelectedDiv] = useState<DivisionItem | null>(null);
   const [selectedClub, setSelectedClub] = useState<ClubItem | null>(null);
 
@@ -113,7 +128,7 @@ export const OrganizationTimeline = ({ onRegisterClick }: OrganizationTimelinePr
 
           {/* Club Grid - 4 on top, 3 below + 8th box with watermarked logo */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {CLUBS_DATA.map((club, i) => (
+            {clubsList.map((club, i) => (
               <ClubCard
                 key={club.id}
                 club={club}

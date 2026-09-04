@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { EVENTS_DATA, EventItem } from "../data/events";
+import { getStoredEvents, CONTENT_UPDATED_EVENT } from "../services/contentService";
 import { EventCard } from "./EventCard";
 import { EventModal } from "./EventModal";
 import { AllEventsModal } from "./AllEventsModal";
@@ -11,6 +12,20 @@ interface EventsSectionProps {
 }
 
 export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
+  const [eventsList, setEventsList] = useState<EventItem[]>(() => {
+    const stored = getStoredEvents().filter((e) => e.status !== "draft");
+    return stored.length > 0 ? stored : EVENTS_DATA;
+  });
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      const stored = getStoredEvents().filter((e) => e.status !== "draft");
+      setEventsList(stored.length > 0 ? stored : EVENTS_DATA);
+    };
+    window.addEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+    return () => window.removeEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+  }, []);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const indexRef = useRef(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -72,12 +87,12 @@ export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
   };
 
   const scrollPrev = () => {
-    const prev = (indexRef.current - 1 + EVENTS_DATA.length) % EVENTS_DATA.length;
+    const prev = (indexRef.current - 1 + eventsList.length) % eventsList.length;
     scrollToIndex(prev);
   };
 
   const scrollNext = () => {
-    const next = (indexRef.current + 1) % EVENTS_DATA.length;
+    const next = (indexRef.current + 1) % eventsList.length;
     scrollToIndex(next);
   };
 
@@ -85,11 +100,11 @@ export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
   useEffect(() => {
     if (isHovered || showAllEvents || selected !== null) return;
     const timer = setInterval(() => {
-      const next = (indexRef.current + 1) % EVENTS_DATA.length;
+      const next = (indexRef.current + 1) % eventsList.length;
       scrollToIndex(next);
     }, 5000);
     return () => clearInterval(timer);
-  }, [isHovered, showAllEvents, selected]);
+  }, [isHovered, showAllEvents, selected, eventsList.length]);
 
   // Sync index during touch swipe or manual scroll
   const handleScroll = () => {
@@ -172,7 +187,7 @@ export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
             isDragging ? "cursor-grabbing scroll-auto" : "cursor-grab snap-x snap-proximity"
           }`}
         >
-          {EVENTS_DATA.map((ev, i) => (
+          {eventsList.map((ev, i) => (
             <EventCard key={ev.id} event={ev} index={i} onSelect={handleSelectEvent} />
           ))}
         </div>

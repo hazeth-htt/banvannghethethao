@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Calendar, Sparkles, X, ChevronRight } from "lucide-react";
 import { EVENTS_DATA } from "../data/events";
+import { getStoredEvents } from "../services/contentService";
 import { Footer } from "./Footer";
 import { FadeUp } from "./animations/FadeUp";
 
@@ -14,11 +15,12 @@ interface EventDetailPageProps {
 export const EventDetailPage = ({ slug, onBack, onNavigateToSlug }: EventDetailPageProps) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
 
-  const eventIndex = EVENTS_DATA.findIndex((e) => e.slug === slug || e.id === slug);
-  const event = eventIndex !== -1 ? EVENTS_DATA[eventIndex] : EVENTS_DATA[0];
+  const allEvents = getStoredEvents().length > 0 ? getStoredEvents() : EVENTS_DATA;
+  const eventIndex = allEvents.findIndex((e) => e.slug === slug || e.id === slug);
+  const event = eventIndex !== -1 ? allEvents[eventIndex] : allEvents[0];
 
-  const prevEvent = eventIndex > 0 ? EVENTS_DATA[eventIndex - 1] : EVENTS_DATA[EVENTS_DATA.length - 1];
-  const nextEvent = eventIndex < EVENTS_DATA.length - 1 ? EVENTS_DATA[eventIndex + 1] : EVENTS_DATA[0];
+  const prevEvent = eventIndex > 0 ? allEvents[eventIndex - 1] : allEvents[allEvents.length - 1];
+  const nextEvent = eventIndex < allEvents.length - 1 ? allEvents[eventIndex + 1] : allEvents[0];
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });

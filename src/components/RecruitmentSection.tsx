@@ -1,41 +1,27 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { FadeUp } from "./animations/FadeUp";
 import { SITE_CONFIG } from "../data/config";
-
-interface Stage {
-  date: string;
-  title: string;
-  description: string;
-  status: "active" | "completed" | "upcoming";
-}
-
-const stages: Stage[] = [
-  {
-    date: "01/09",
-    title: "Mở đơn",
-    description: "Chính thức phát động đợt tuyển thành viên mới trên toàn Đại học",
-    status: "active",
-  },
-  {
-    date: "16/09",
-    title: "Đóng đơn",
-    description: "Kết thúc vòng đơn",
-    status: "upcoming",
-  },
-  {
-    date: "22/09",
-    title: "Kết quả",
-    description: "Công bố danh sách thành viên chính thức gia nhập đại gia đình",
-    status: "upcoming",
-  },
-];
+import { getStoredRecruitment, CONTENT_UPDATED_EVENT, RecruitmentSettings } from "../services/contentService";
 
 interface RecruitmentSectionProps {
   onOpenFormModal?: () => void;
 }
 
 export const RecruitmentSection = ({ onOpenFormModal }: RecruitmentSectionProps) => {
+  const [recruitment, setRecruitment] = useState<RecruitmentSettings>(() => getStoredRecruitment());
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setRecruitment(getStoredRecruitment());
+    };
+    window.addEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+    return () => window.removeEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+  }, []);
+
+  const currentYear = recruitment?.year || SITE_CONFIG.recruitment.year;
+  const stageList = recruitment?.stages?.length ? recruitment.stages : SITE_CONFIG.recruitment.stages;
   return (
     <section id="recruitment" className="section-snap relative w-full py-20 md:py-28 bg-[#07040d] overflow-hidden">
       {/* Very subtle ambient */}
@@ -49,7 +35,7 @@ export const RecruitmentSection = ({ onOpenFormModal }: RecruitmentSectionProps)
           <FadeUp>
             <div className="space-y-3">
               <h2 className="font-display font-extrabold text-bvntt-cream text-3xl sm:text-5xl md:text-6xl uppercase tracking-normal leading-tight">
-                TUYỂN THÀNH VIÊN <span className="text-bvntt-lilac">{SITE_CONFIG.recruitment.year}</span>
+                TUYỂN THÀNH VIÊN <span className="text-bvntt-lilac">{currentYear}</span>
               </h2>
               <p className="text-sm sm:text-base text-bvntt-muted font-normal max-w-xl mx-auto leading-relaxed pt-1">
                 Gia nhập Ban Văn nghệ Thể thao - nơi đam mê được nuôi dưỡng, tài năng được tỏa sáng và mỗi sự kiện là một ký ức thanh xuân không thể nào quên.
@@ -64,7 +50,7 @@ export const RecruitmentSection = ({ onOpenFormModal }: RecruitmentSectionProps)
           <div className="hidden md:block absolute top-[11px] left-[16.666%] right-[16.666%] h-px bg-white/[0.12] z-0" />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {stages.map((stage, i) => (
+            {stageList.map((stage, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
