@@ -22,6 +22,7 @@ export const Navbar = ({ onOpenContact: _onOpenContact }: NavbarProps) => {
     { label: "Sự kiện", href: "#events" },
     { label: "Mảng chuyên môn", href: "#organization" },
     { label: "Tuyển thành viên 2026", href: "#recruitment" },
+    { label: "Tin tức", href: "#news" },
   ];
 
   const scroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

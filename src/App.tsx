@@ -6,6 +6,7 @@ import { EventsSection } from "./components/EventsSection";
 import { ValuesMarquee } from "./components/ValuesMarquee";
 import { OrganizationTimeline } from "./components/OrganizationTimeline";
 import { RecruitmentSection } from "./components/RecruitmentSection";
+import { NewsSection } from "./components/NewsSection";
 import { RecruitmentFormPage } from "./components/RecruitmentFormPage";
 import { AdminPage } from "./components/AdminPage";
 import { Footer } from "./components/Footer";
@@ -142,6 +143,9 @@ export function App() {
 
         {/* Section 05: Recruitment 2026 Section */}
         <RecruitmentSection onOpenFormModal={handleOpenFormPage} />
+
+        {/* Section 06: News & Events Section */}
+        <NewsSection />
       </main>
 
       {/* Global Footer */}
