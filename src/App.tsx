@@ -38,6 +38,25 @@ export function App() {
   const [showAdminPage, setShowAdminPage] = useState(() => window.location.pathname === "/admin" || window.location.hash === "#admin");
 
   useEffect(() => {
+    // Luôn đảm bảo cuộn về đầu trang (Hero / Trang chủ) khi load/reload lại web
+    const isSpecialRoute =
+      window.location.pathname.startsWith("/events/") ||
+      window.location.pathname === "/form" ||
+      window.location.pathname === "/admin" ||
+      window.location.hash.startsWith("#events/") ||
+      window.location.hash === "#form" ||
+      window.location.hash === "#admin";
+
+    if (!isSpecialRoute) {
+      if (window.location.hash) {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+      window.scrollTo(0, 0);
+      requestAnimationFrame(() => {
+        window.scrollTo(0, 0);
+      });
+    }
+
     // Tự động tải nội dung mới nhất từ Neon Database về
     fetchContentFromDatabase();
 

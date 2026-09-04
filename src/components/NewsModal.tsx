@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Calendar, User, Tag, Pin, Share2 } from "lucide-react";
+import { X, Calendar, User, Tag, Share2 } from "lucide-react";
 import { ContentPost } from "../services/contentService";
 
 interface NewsModalProps {
@@ -65,12 +65,6 @@ export const NewsModal = ({ post, onClose }: NewsModalProps) => {
                 <Tag className="w-3 h-3" />
                 <span>{post.category}</span>
               </span>
-              {post.isPinned && (
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-500/15 text-amber-400 px-2.5 py-1 rounded border border-amber-500/30">
-                  <Pin className="w-3 h-3" />
-                  <span>Tin ghim</span>
-                </span>
-              )}
             </div>
 
             <div className="flex items-center gap-2">
