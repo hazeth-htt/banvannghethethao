@@ -39,20 +39,21 @@ export const OrganizationNode = ({ division, index, onSelect }: OrganizationNode
       `}>
         {/* ─ Text block ─ */}
         <div className={`flex flex-col space-y-4 ${isEven ? "md:order-1" : "md:order-2"}`}>
-          {/* Number + Name on same horizontal line */}
-          <h3 className="font-display text-3xl sm:text-4xl md:text-5xl text-bvntt-cream leading-tight uppercase flex items-baseline gap-3 md:gap-4">
-            <span className="text-white/30 select-none">
+          {/* Header: Number on left, Title + Role stacked on right so subtitle aligns with title */}
+          <div className="flex items-start gap-3 md:gap-4">
+            <span className="font-display text-3xl sm:text-4xl md:text-5xl text-white/30 select-none leading-tight flex-shrink-0">
               {division.order}
             </span>
-            <span>
-              {division.name}
-            </span>
-          </h3>
-
-          {/* Role - single purple accent */}
-          <p className="text-xs font-semibold text-bvntt-lilac tracking-wide uppercase">
-            {division.role}
-          </p>
+            <div className="space-y-1.5 min-w-0">
+              <h3 className="font-display text-3xl sm:text-4xl md:text-5xl text-bvntt-cream leading-tight uppercase">
+                {division.name}
+              </h3>
+              {/* Role - single purple accent */}
+              <p className="text-xs font-semibold text-bvntt-lilac tracking-wide uppercase">
+                {division.role}
+              </p>
+            </div>
+          </div>
 
           {/* Unified Information Block: cleanly aligned, justified on both sides into one solid block */}
           <div className="bg-[#0c0718]/60 border border-white/[0.08] p-5 sm:p-6 space-y-4 backdrop-blur-sm shadow-lg">
