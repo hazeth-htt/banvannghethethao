@@ -8,7 +8,6 @@ import {
   ChevronRight,
   Search,
   ArrowLeft,
-  Newspaper,
   Tag,
 } from "lucide-react";
 import {
@@ -127,10 +126,6 @@ export const AllNewsPage = ({
 
           {/* Hero Header */}
           <div className="max-w-4xl mb-12 md:mb-16">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.16em] uppercase text-bvntt-lilac mb-3 px-3 py-1 bg-bvntt-lilac/10 border border-bvntt-lilac/20">
-              <Newspaper className="w-3.5 h-3.5" />
-              <span>Thông tin chính thức & Sự kiện</span>
-            </div>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase text-bvntt-cream leading-tight tracking-normal">
               TỔNG HỢP <span className="text-bvntt-lilac">TIN TỨC & SỰ KIỆN</span>
             </h1>

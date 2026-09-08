@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Calendar, Search, Sparkles, Tag, Users } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Search, Tag, Users } from "lucide-react";
 import { EVENTS_DATA, EventItem } from "../data/events";
 import { getStoredEvents, CONTENT_UPDATED_EVENT } from "../services/contentService";
 import { Navbar } from "./Navbar";
@@ -90,10 +90,6 @@ export const AllEventsPage = ({
 
           {/* Hero Header */}
           <div className="max-w-4xl mb-12 md:mb-16">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.16em] uppercase text-bvntt-lilac mb-3 px-3 py-1 bg-bvntt-lilac/10 border border-bvntt-lilac/20">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Thư viện hoạt động thường niên</span>
-            </div>
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase text-bvntt-cream leading-tight tracking-normal">
               TẤT CẢ <span className="text-bvntt-lilac">SỰ KIỆN</span> BVNTT
             </h1>
