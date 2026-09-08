@@ -185,14 +185,11 @@ export const Navbar = ({
                             <Camera className="w-4 h-4" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="text-xs font-bold text-bvntt-cream group-hover:text-bvntt-lilac transition-colors uppercase tracking-wider flex items-center gap-1.5">
-                              <span>Khoảnh khắc</span>
-                              <span className="px-1.5 py-0.2 text-[9px] bg-bvntt-lilac/20 text-bvntt-lilac uppercase font-mono tracking-normal">
-                                Gallery
-                              </span>
+                            <div className="text-xs font-bold text-bvntt-cream group-hover:text-bvntt-lilac transition-colors uppercase tracking-wider">
+                              Khoảnh khắc
                             </div>
                             <div className="text-[11px] text-bvntt-muted mt-0.5 leading-snug">
-                              Thư viện hình ảnh & dấu ấn thanh xuân rực rỡ
+                              Bộ sưu tập hình ảnh hoạt động & sự kiện
                             </div>
                           </div>
                         </button>
@@ -281,7 +278,7 @@ export const Navbar = ({
                       className="w-full flex items-center gap-2.5 py-2 text-xs font-semibold uppercase tracking-wider text-white/80 hover:text-bvntt-lilac text-left"
                     >
                       <Camera className="w-4 h-4 text-bvntt-lilac" />
-                      <span>Khoảnh khắc (Gallery)</span>
+                      <span>Khoảnh khắc</span>
                     </button>
                   </div>
                 )}
