@@ -14,15 +14,17 @@ import {
   Layers,
   ArrowLeft,
   Sparkles,
+  Activity,
 } from "lucide-react";
 import { fetchSubmissions, deleteSubmission, Submission } from "../services/dbService";
 import { ContentManager } from "./admin/ContentManager";
+import { AnalyticsDashboard } from "./admin/AnalyticsDashboard";
 import { fetchContentFromDatabase } from "../services/contentService";
 
 const ADMIN_PASSWORD = "bvntt2026"; // Change this in production
 const AUTH_KEY = "bvntt_admin_authenticated";
 
-type AdminMainTab = "submissions" | "content";
+type AdminMainTab = "submissions" | "content" | "analytics";
 
 // ── Admin Page ─────────────────────────────────────────────────────────────
 export const AdminPage = () => {
@@ -253,12 +255,29 @@ export const AdminPage = () => {
                 <Sparkles className="w-2.5 h-2.5" /> Mới
               </span>
             </button>
+
+            <button
+              onClick={() => setMainTab("analytics")}
+              className={`flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-wider font-semibold border-b-2 transition-all cursor-pointer ${
+                mainTab === "analytics"
+                  ? "border-bvntt-lilac text-bvntt-cream font-bold bg-white/[0.03]"
+                  : "border-transparent text-white/50 hover:text-white/80 hover:bg-white/[0.01]"
+              }`}
+            >
+              <Activity className="w-4 h-4 text-bvntt-lilac" />
+              <span>Thống kê truy cập (Analytics)</span>
+              <span className="flex items-center gap-1 text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 uppercase tracking-wider border border-emerald-500/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> Live
+              </span>
+            </button>
           </div>
         </div>
       </header>
 
       <main className="max-w-screen-xl mx-auto px-6 md:px-10 py-10 space-y-8">
-        {mainTab === "content" ? (
+        {mainTab === "analytics" ? (
+          <AnalyticsDashboard />
+        ) : mainTab === "content" ? (
           <ContentManager />
         ) : (
           <>

@@ -33,3 +33,6 @@ lerna-debug.log*
 # Raw submission exports with private data
 *.csv
 
+# Local raw assets
+Các sự kiện/
+

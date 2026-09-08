@@ -21,7 +21,11 @@ const CATEGORIES: ("all" | PostCategory)[] = [
 
 const PAGE_SIZE = 6; // 3 cột x 2 hàng mỗi trang
 
-export const NewsSection = () => {
+interface NewsSectionProps {
+  onNavigateToAllNews?: () => void;
+}
+
+export const NewsSection = ({ onNavigateToAllNews }: NewsSectionProps = {}) => {
   const [posts, setPosts] = useState<ContentPost[]>(() => {
     return getStoredPosts().filter((p) => p.status === "published");
   });
@@ -245,14 +249,17 @@ export const NewsSection = () => {
 
                 {/* Button "Xem tất cả" */}
                 <button
-                  onClick={handleToggleShowAll}
-                  className={`h-10 px-4 flex items-center justify-center text-xs uppercase tracking-wider font-bold transition-all duration-200 cursor-pointer border ml-2 ${
-                    showAll
-                      ? "bg-bvntt-lilac text-[#07040d] border-bvntt-lilac shadow-[0_0_15px_rgba(214,185,255,0.25)]"
-                      : "bg-white/[0.02] text-white/70 border-white/[0.08] hover:text-white hover:border-bvntt-lilac/40 hover:bg-white/[0.05]"
-                  }`}
+                  onClick={() => {
+                    if (onNavigateToAllNews) {
+                      onNavigateToAllNews();
+                    } else {
+                      handleToggleShowAll();
+                    }
+                  }}
+                  className="h-10 px-4 flex items-center gap-1.5 text-xs uppercase tracking-wider font-bold transition-all duration-200 cursor-pointer border ml-2 bg-white/[0.02] text-white/80 border-white/[0.08] hover:text-bvntt-lilac hover:border-bvntt-lilac/50 hover:bg-bvntt-lilac/10"
                 >
-                  {showAll ? "Thu gọn phân trang" : "Xem tất cả"}
+                  <span>Xem tất cả bài viết</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             )}

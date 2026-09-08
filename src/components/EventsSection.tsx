@@ -9,9 +9,10 @@ import { FadeUp } from "./animations/FadeUp";
 
 interface EventsSectionProps {
   onNavigateToEvent?: (slug: string) => void;
+  onNavigateToAllEvents?: () => void;
 }
 
-export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
+export const EventsSection = ({ onNavigateToEvent, onNavigateToAllEvents }: EventsSectionProps) => {
   const [eventsList, setEventsList] = useState<EventItem[]>(() => {
     const stored = getStoredEvents().filter((e) => e.status !== "draft");
     return stored.length > 0 ? stored : EVENTS_DATA;
@@ -196,7 +197,13 @@ export const EventsSection = ({ onNavigateToEvent }: EventsSectionProps) => {
       {/* ── "Xem tất cả" CTA button ── */}
       <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-16 mt-8 md:mt-12 flex items-center justify-center">
         <button
-          onClick={() => setShowAllEvents(true)}
+          onClick={() => {
+            if (onNavigateToAllEvents) {
+              onNavigateToAllEvents();
+            } else {
+              setShowAllEvents(true);
+            }
+          }}
           className="inline-flex items-center gap-2.5 text-xs font-semibold tracking-[0.12em] uppercase text-bvntt-cream border border-bvntt-border-md bg-white/[0.04] px-7 py-3 hover:border-bvntt-lilac hover:text-bvntt-lilac hover:bg-bvntt-lilac/10 transition-all duration-300 backdrop-blur-sm cursor-pointer"
         >
           <span>Xem tất cả sự kiện</span>
