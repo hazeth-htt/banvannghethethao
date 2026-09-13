@@ -269,6 +269,9 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
         answers["[Media] Đã làm gì"] = data.med_daLamGi;
         answers["[Media] Ảnh đẹp cần gì"] = data.med_anhDep;
         answers["[Media] Chuẩn bị"] = data.med_chuanBi;
+        if (data.med_themDesign) {
+          answers["[Media] Thử sức thêm Design"] = data.med_themDesign;
+        }
       }
       if (data.md_tieumang !== "Media") {
         answers["[Design] Công cụ"] = data.des_congCu;
@@ -283,6 +286,9 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
       answers["Tự đánh giá giao tiếp"] = data.dn_giaotiep;
       answers["3 kỹ năng ĐN"] = data.dn_kyNang;
       answers["Nhóm hay một mình"] = data.dn_nhom;
+    }
+    if (data.goiY) {
+      answers["Góp ý / Thắc mắc"] = data.goiY;
     }
     await submitApplication({
       hoTen: data.hoTen, mssv: data.mssv, khoa: data.khoa, truongKhoa: data.truongKhoa,

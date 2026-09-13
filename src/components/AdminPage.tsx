@@ -15,6 +15,9 @@ import {
   ArrowLeft,
   Sparkles,
   Activity,
+  ExternalLink,
+  Phone,
+  Mail,
 } from "lucide-react";
 import { fetchSubmissions, deleteSubmission, Submission } from "../services/dbService";
 import { ContentManager } from "./admin/ContentManager";
@@ -25,6 +28,65 @@ const ADMIN_PASSWORD = "bvntt2026"; // Change this in production
 const AUTH_KEY = "bvntt_admin_authenticated";
 
 type AdminMainTab = "submissions" | "content" | "analytics";
+
+// Bảng ánh xạ tiêu đề câu hỏi đầy đủ y hệt Form
+const QUESTION_LABELS: Record<string, string> = {
+  // Mảng Tổ chức
+  "Ba điểm mạnh và yếu": "Hãy kể ba điểm mạnh và ba điểm yếu của bản thân bạn.",
+  "Điểm mạnh phù hợp mảng TC": "Bạn nghĩ điểm mạnh nào của mình phù hợp với các công việc của Mảng Tổ chức?",
+  "Hoạt động từng tham gia": "Hãy kể tên các hoạt động văn hóa/văn nghệ/thể thao bạn từng tham gia tổ chức? Chọn ra một hoạt động mà bạn tâm đắc nhất và nêu lý do.",
+  "Phẩm chất quan trọng": "Bạn nghĩ phẩm chất nào quan trọng hơn trong công việc tổ chức: tinh thần trách nhiệm, sự tỉ mỉ hay khả năng làm việc nhóm? Vì sao?",
+  "Sự kiện thành công là gì": "Bạn đánh giá như thế nào là một sự kiện thành công?",
+  "Mong muốn đóng góp": "Bạn có mong muốn được học hỏi hay đóng góp điều gì cho mảng Tổ chức nói riêng và Ban Văn nghệ Thể thao nói chung?",
+
+  // Mảng Truyền thông
+  "Truyền thông là gì": "Bạn hiểu truyền thông là gì?",
+  "Yếu tố chiến dịch TT": "Theo bạn, yếu tố nào là quan trọng trong một chiến dịch truyền thông?",
+  "Siêu năng lực": "Nếu được chọn giữa 1 trong 2 siêu năng lực: luôn tàng hình hoặc luôn bay lơ lửng, bạn chọn gì? Bạn nghĩ siêu năng lực đó giúp ích được gì trong đời sống?",
+  "Kinh nghiệm TT": "Bạn đã từng tham gia truyền thông hay chưa? Hãy gắn link các sản phẩm nhé (video, hình ảnh, content...). Nếu chưa, hãy cho chúng mình biết vì sao bạn muốn thử sức ở mảng này.",
+
+  // Mảng Media - Design
+  "Tiểu mảng": "Bạn muốn ứng tuyển vào tiểu mảng nào?",
+  "Mong muốn học": "Bạn mong muốn học được gì khi tham gia mảng?",
+  "Portfolio": "Link Portfolio / Ấn phẩm của bạn",
+  "[Media] Đã làm gì": "Bạn đã từng chụp ảnh/quay video cho CLB, sự kiện hoặc dự án nào?",
+  "[Media] Ảnh đẹp cần gì": "Theo bạn, một bức ảnh sự kiện đẹp cần có những yếu tố nào?",
+  "[Media] Chuẩn bị": "Bạn được giao chụp một sự kiện nhưng không có shot list. Bạn sẽ chuẩn bị những gì trước khi bắt đầu?",
+  "[Media] Thử sức Design": "Bạn có muốn thử sức thêm ở Tiểu mảng Design không?",
+  "[Media] Thử sức thêm Design": "Bạn có muốn thử sức thêm ở Tiểu mảng Design không?",
+  "[Design] Công cụ": "Bạn thường sử dụng công cụ nào để thiết kế?",
+  "[Design] Thiết kế tốt": "Theo bạn, một thiết kế tốt cần đáp ứng những yếu tố nào?",
+  "[Design] Ưu tiên": "Theo bạn, màu sắc, typography, bố cục và hình ảnh - yếu tố nào cần được ưu tiên? Tại sao?",
+  "[Design] Khi bị sửa toàn bộ": "Bạn đã hoàn thành design nhưng leader yêu cầu sửa gần như toàn bộ. Bạn sẽ xử lý thế nào?",
+  "[Design] Đẹp nhưng sai TT": "Nếu một thiết kế rất đẹp nhưng không truyền tải đúng thông tin của chương trình, bạn có cho rằng đó là một thiết kế tốt không? Vì sao?",
+
+  // Mảng Đối ngoại
+  "Biết gì về ĐN": "Bạn biết gì về công việc của Mảng Đối ngoại trong Ban Văn nghệ Thể thao?",
+  "Kinh nghiệm": "Hãy mô tả ngắn gọn về kinh nghiệm làm việc/hoạt động xã hội trước đây của bạn (đặc biệt là các vị trí liên quan tới giao tiếp, đối ngoại hoặc thu hút tài trợ nếu có).",
+  "Tự đánh giá giao tiếp": "Bạn hãy tự đánh giá khả năng giao tiếp của mình trên thang điểm 10. Vì sao bạn cho mình số điểm đó?",
+  "3 kỹ năng ĐN": "Theo bạn, ba kỹ năng cần có của người làm Đối ngoại là gì? Bạn tự đánh giá mình mạnh nhất ở kỹ năng nào trong số đó?",
+  "Nhóm hay một mình": "Giữa việc làm một mình và làm việc nhóm, bạn thấy mình phát huy tốt nhất ở hình thức nào? Vì sao?",
+
+  // Góp ý
+  "Góp ý / Thắc mắc": "Bạn có câu hỏi hoặc góp ý gì cho chúng mình không?",
+  "Góp ý / Câu hỏi thêm": "Bạn có câu hỏi hoặc góp ý gì cho chúng mình không?",
+  "goiY": "Bạn có câu hỏi hoặc góp ý gì cho chúng mình không?",
+};
+
+// Helper parse an toàn cho answers (hỗ trợ cả JSON string và object)
+const parseAnswers = (raw: any): Record<string, string> => {
+  if (!raw) return {};
+  if (typeof raw === "object") return raw;
+  if (typeof raw === "string") {
+    try {
+      const parsed = JSON.parse(raw);
+      return typeof parsed === "object" && parsed !== null ? parsed : {};
+    } catch {
+      return {};
+    }
+  }
+  return {};
+};
 
 // ── Admin Page ─────────────────────────────────────────────────────────────
 export const AdminPage = () => {
@@ -88,21 +150,165 @@ export const AdminPage = () => {
   };
 
   const handleExportCSV = () => {
-    const rows = submissions.map(s => [
-      s.submittedAt, s.hoTen, s.mssv, s.khoa, s.truongKhoa, s.lop,
-      s.sdt, s.email, s.facebook, s.mang,
-    ]);
-    const header = ["Thời gian", "Họ tên", "MSSV", "Khoá", "Trường/Khoa", "Lớp", "SĐT", "Email", "Facebook", "Mảng"];
-    const csv = [header, ...rows].map(r => r.map(c => `"${(c||"").replace(/"/g,'""')}"`).join(",")).join("\n");
-    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+    // Xuất danh sách theo bộ lọc hiện tại hoặc toàn bộ
+    const list = filtered.length > 0 ? filtered : submissions;
+    if (list.length === 0) {
+      alert("Không có đơn ứng tuyển nào để xuất.");
+      return;
+    }
+
+    // Danh sách các cột câu hỏi chuyên môn cố định theo từng mảng
+    const SPECIFIC_COLUMNS: { label: string; keys: string[] }[] = [
+      // Câu hỏi chung
+      { label: "[Câu hỏi chung] Bạn biết gì về Ban Văn nghệ Thể thao?", keys: ["bietGi"] },
+      { label: "[Câu hỏi chung] Lý do muốn ứng tuyển vào Ban?", keys: ["lyDo"] },
+
+      // Mảng Tổ chức
+      { label: "[Tổ chức] 3 điểm mạnh và 3 điểm yếu của bản thân", keys: ["Ba điểm mạnh và yếu", "tc_diemManh"] },
+      { label: "[Tổ chức] Điểm mạnh phù hợp với mảng Tổ chức", keys: ["Điểm mạnh phù hợp mảng TC", "tc_phucHop"] },
+      { label: "[Tổ chức] Hoạt động từng tham gia tổ chức & tâm đắc", keys: ["Hoạt động từng tham gia", "tc_hoatDong"] },
+      { label: "[Tổ chức] Phẩm chất quan trọng (trách nhiệm/tỉ mỉ/nhóm)", keys: ["Phẩm chất quan trọng", "tc_phamChat"] },
+      { label: "[Tổ chức] Định nghĩa thế nào là sự kiện thành công", keys: ["Sự kiện thành công là gì", "tc_suKien"] },
+      { label: "[Tổ chức] Mong muốn học hỏi / đóng góp cho mảng & Ban", keys: ["Mong muốn đóng góp", "tc_mongMuon"] },
+
+      // Mảng Truyền thông
+      { label: "[Truyền thông] Bạn hiểu truyền thông là gì?", keys: ["Truyền thông là gì", "tt_hieu"] },
+      { label: "[Truyền thông] Yếu tố quan trọng trong chiến dịch TT", keys: ["Yếu tố chiến dịch TT", "tt_yeuTo"] },
+      { label: "[Truyền thông] Lựa chọn siêu năng lực (tàng hình hay bay lơ lửng)", keys: ["Siêu năng lực", "tt_sienang"] },
+      { label: "[Truyền thông] Kinh nghiệm & link sản phẩm TT", keys: ["Kinh nghiệm TT", "tt_kinh_nghiem"] },
+
+      // Mảng Media - Design
+      { label: "[Media-Design] Tiểu mảng ứng tuyển (Media / Design / Cả hai)", keys: ["Tiểu mảng", "md_tieumang"] },
+      { label: "[Media-Design] Mong muốn học được gì khi tham gia mảng", keys: ["Mong muốn học", "md_mongMuon"] },
+      { label: "[Media-Design] Link Portfolio / Ấn phẩm", keys: ["Portfolio", "md_portfolio"] },
+      { label: "[Media] Đã từng chụp ảnh/quay video cho CLB, sự kiện nào", keys: ["[Media] Đã làm gì", "med_daLamGi"] },
+      { label: "[Media] Yếu tố một bức ảnh sự kiện đẹp", keys: ["[Media] Ảnh đẹp cần gì", "med_anhDep"] },
+      { label: "[Media] Chuẩn bị khi chụp sự kiện không có shot list", keys: ["[Media] Chuẩn bị", "med_chuanBi"] },
+      { label: "[Media] Thử sức thêm ở Tiểu mảng Design", keys: ["[Media] Thử sức thêm Design", "[Media] Thử sức Design", "med_themDesign"] },
+      { label: "[Design] Công cụ thường sử dụng thiết kế", keys: ["[Design] Công cụ", "des_congCu"] },
+      { label: "[Design] Tiêu chí một thiết kế tốt", keys: ["[Design] Thiết kế tốt", "des_toiNao"] },
+      { label: "[Design] Thứ tự ưu tiên màu sắc/typography/bố cục/hình ảnh", keys: ["[Design] Ưu tiên", "des_uuTien"] },
+      { label: "[Design] Xử lý khi leader yêu cầu sửa gần như toàn bộ", keys: ["[Design] Khi bị sửa toàn bộ", "des_suaHet"] },
+      { label: "[Design] Quan điểm thiết kế rất đẹp nhưng sai thông tin", keys: ["[Design] Đẹp nhưng sai TT", "des_depMaNhung"] },
+
+      // Mảng Đối ngoại
+      { label: "[Đối ngoại] Hiểu biết về công việc của Mảng Đối ngoại", keys: ["Biết gì về ĐN", "dn_bietGi"] },
+      { label: "[Đối ngoại] Kinh nghiệm làm việc / hoạt động xã hội trước đây", keys: ["Kinh nghiệm", "dn_kinhNghiem"] },
+      { label: "[Đối ngoại] Tự đánh giá khả năng giao tiếp (thang điểm 10)", keys: ["Tự đánh giá giao tiếp", "dn_giaotiep"] },
+      { label: "[Đối ngoại] Ba kỹ năng cần có của người làm Đối ngoại", keys: ["3 kỹ năng ĐN", "dn_kyNang"] },
+      { label: "[Đối ngoại] Phát huy tốt nhất khi làm một mình hay nhóm", keys: ["Nhóm hay một mình", "dn_nhom"] },
+
+      // Góp ý
+      { label: "[Góp ý] Câu hỏi hoặc góp ý thêm cho Ban", keys: ["Góp ý / Thắc mắc", "Góp ý / Câu hỏi thêm", "goiY"] },
+    ];
+
+    // Thu thập thêm bất kỳ câu hỏi nào khác có trong answers của các đơn
+    const allKnownKeys = new Set<string>();
+    SPECIFIC_COLUMNS.forEach(col => col.keys.forEach(k => allKnownKeys.add(k)));
+
+    const extraKeys: string[] = [];
+    list.forEach(s => {
+      const ans = parseAnswers(s.answers);
+      Object.keys(ans).forEach(k => {
+        if (!allKnownKeys.has(k) && !extraKeys.includes(k)) {
+          extraKeys.push(k);
+        }
+      });
+    });
+
+    // Headers
+    const baseHeaders = [
+      "Mã đơn",
+      "Thời gian nộp",
+      "Họ và tên",
+      "MSSV",
+      "Khoá",
+      "Trường / Khoa",
+      "Lớp",
+      "Số điện thoại",
+      "Email",
+      "Facebook",
+      "Mảng ứng tuyển",
+    ];
+
+    const headers = [
+      ...baseHeaders,
+      ...SPECIFIC_COLUMNS.map(c => c.label),
+      ...extraKeys.map(k => QUESTION_LABELS[k] || `[Khác] ${k}`),
+      "[Tổng hợp toàn bộ câu trả lời]"
+    ];
+
+    const rows = list.map(s => {
+      const ans = parseAnswers(s.answers);
+
+      // Base fields
+      const row: string[] = [
+        s.id || "",
+        s.submittedAt ? new Date(s.submittedAt).toLocaleString("vi-VN") : "",
+        s.hoTen || "",
+        s.mssv || "",
+        s.khoa || "",
+        s.truongKhoa || "",
+        s.lop || "",
+        s.sdt || "",
+        s.email || "",
+        s.facebook || "",
+        s.mang || "",
+      ];
+
+      // Specific columns
+      SPECIFIC_COLUMNS.forEach(col => {
+        let val = "";
+        if (col.keys.includes("bietGi")) val = s.bietGi || "";
+        else if (col.keys.includes("lyDo")) val = s.lyDo || "";
+        else {
+          for (const k of col.keys) {
+            if (ans[k] !== undefined && ans[k] !== null && ans[k] !== "") {
+              val = ans[k];
+              break;
+            }
+          }
+        }
+        row.push(val);
+      });
+
+      // Extra keys
+      extraKeys.forEach(k => {
+        row.push(ans[k] || "");
+      });
+
+      // Combined summary column (tiện để đọc lướt tất cả câu trả lời trên 1 ô Excel)
+      const summaryParts: string[] = [];
+      summaryParts.push(`--- I. CÂU HỎI CHUNG ---`);
+      summaryParts.push(`1. Bạn biết gì về Ban: ${s.bietGi || "(Chưa điền)"}`);
+      summaryParts.push(`2. Lý do muốn ứng tuyển: ${s.lyDo || "(Chưa điền)"}`);
+      summaryParts.push(``);
+      summaryParts.push(`--- II. CÂU HỎI CHUYÊN MÔN (${s.mang || "Chưa chọn"}) ---`);
+      let count = 1;
+      for (const [k, v] of Object.entries(ans)) {
+        summaryParts.push(`${count++}. ${QUESTION_LABELS[k] || k}: ${v || "(Chưa điền)"}`);
+      }
+      row.push(summaryParts.join("\n"));
+
+      return row;
+    });
+
+    const csv = [headers, ...rows]
+      .map(r => r.map(c => `"${(c ?? "").toString().replace(/"/g, '""')}"`).join(","))
+      .join("\r\n");
+
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = url; a.download = `bvntt-don-ung-tuyen-${new Date().toLocaleDateString("vi")}.csv`;
-    a.click(); URL.revokeObjectURL(url);
+    const dateStr = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `bvntt-don-ung-tuyen-day-du-${dateStr}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const filtered = submissions.filter(s => {
-    const matchSearch = !search || [s.hoTen, s.mssv, s.email, s.mang, s.truongKhoa].some(f => f?.toLowerCase().includes(search.toLowerCase()));
+    const matchSearch = !search || [s.hoTen, s.mssv, s.email, s.mang, s.truongKhoa, s.bietGi, s.lyDo].some(f => f?.toLowerCase().includes(search.toLowerCase()));
     const matchMang = filterMang === "all" || s.mang === filterMang;
     return matchSearch && matchMang;
   });
@@ -376,33 +582,172 @@ export const AdminPage = () => {
                 </div>
 
                 {/* Expanded detail */}
-                {expanded === s.id && (
-                  <div className="border-t border-white/[0.06] px-5 py-5 space-y-5 bg-white/[0.015]">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {[
-                        ["Họ và tên", s.hoTen], ["MSSV", s.mssv], ["Khoá", s.khoa],
-                        ["Trường / Khoa", s.truongKhoa], ["Lớp", s.lop], ["SĐT", s.sdt],
-                        ["Email", s.email], ["Facebook", s.facebook], ["Mảng ứng tuyển", s.mang],
-                      ].map(([k, v]) => (
-                        <div key={k}>
-                          <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">{k}</p>
-                          <p className="text-sm text-bvntt-cream mt-0.5 break-all">{v || "-"}</p>
+                {expanded === s.id && (() => {
+                  const ans = parseAnswers(s.answers);
+                  const answerEntries = Object.entries(ans);
+                  return (
+                    <div className="border-t border-white/[0.08] px-6 py-6 space-y-7 bg-white/[0.015]">
+                      {/* Mục 1: Thông tin cá nhân & Liên hệ */}
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 pb-2 border-b border-white/[0.08]">
+                          <div className="w-1.5 h-4 bg-bvntt-lilac rounded-full" />
+                          <h4 className="text-xs font-bold tracking-[0.12em] uppercase text-bvntt-cream">
+                            1. Thông tin cá nhân & Liên hệ
+                          </h4>
                         </div>
-                      ))}
-                    </div>
-                    {Object.keys(s.answers || {}).length > 0 && (
-                      <div className="space-y-3 pt-3 border-t border-white/[0.05]">
-                        <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-bvntt-lilac">Câu hỏi chuyên môn</p>
-                        {Object.entries(s.answers).map(([q, a]) => (
-                          <div key={q}>
-                            <p className="text-[11px] font-medium text-bvntt-cream/70 mb-1">{q}</p>
-                            <p className="text-sm text-bvntt-muted leading-relaxed whitespace-pre-wrap">{a || "-"}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-1">
+                          <div className="bg-white/[0.02] border border-white/[0.06] p-3.5 space-y-1">
+                            <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">Họ và tên</p>
+                            <p className="text-sm font-medium text-bvntt-cream">{s.hoTen || "-"}</p>
                           </div>
-                        ))}
+                          <div className="bg-white/[0.02] border border-white/[0.06] p-3.5 space-y-1">
+                            <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">MSSV</p>
+                            <p className="text-sm font-medium text-bvntt-cream">{s.mssv || "-"}</p>
+                          </div>
+                          <div className="bg-white/[0.02] border border-white/[0.06] p-3.5 space-y-1">
+                            <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">Khoá</p>
+                            <p className="text-sm font-medium text-bvntt-cream">{s.khoa || "-"}</p>
+                          </div>
+                          <div className="bg-white/[0.02] border border-white/[0.06] p-3.5 space-y-1">
+                            <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">Trường / Khoa</p>
+                            <p className="text-sm font-medium text-bvntt-cream">{s.truongKhoa || "-"}</p>
+                          </div>
+                          <div className="bg-white/[0.02] border border-white/[0.06] p-3.5 space-y-1">
+                            <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">Lớp</p>
+                            <p className="text-sm font-medium text-bvntt-cream">{s.lop || "-"}</p>
+                          </div>
+                          <div className="bg-white/[0.02] border border-white/[0.06] p-3.5 space-y-1">
+                            <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">Số điện thoại</p>
+                            {s.sdt ? (
+                              <a href={`tel:${s.sdt}`} className="text-sm text-bvntt-lilac hover:underline inline-flex items-center gap-1.5 font-medium">
+                                <Phone className="w-3.5 h-3.5 flex-shrink-0 text-bvntt-lilac" />
+                                <span>{s.sdt}</span>
+                              </a>
+                            ) : (
+                              <p className="text-sm text-bvntt-cream">-</p>
+                            )}
+                          </div>
+                          <div className="bg-white/[0.02] border border-white/[0.06] p-3.5 space-y-1">
+                            <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">Email cá nhân</p>
+                            {s.email ? (
+                              <a href={`mailto:${s.email}`} className="text-sm text-bvntt-lilac hover:underline inline-flex items-center gap-1.5 break-all font-medium">
+                                <Mail className="w-3.5 h-3.5 flex-shrink-0 text-bvntt-lilac" />
+                                <span>{s.email}</span>
+                              </a>
+                            ) : (
+                              <p className="text-sm text-bvntt-cream">-</p>
+                            )}
+                          </div>
+                          <div className="bg-white/[0.02] border border-white/[0.06] p-3.5 space-y-1">
+                            <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">Link Facebook cá nhân</p>
+                            {s.facebook ? (
+                              <a
+                                href={s.facebook.startsWith("http") ? s.facebook : `https://${s.facebook}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm text-bvntt-lilac hover:underline inline-flex items-center gap-1.5 break-all font-medium"
+                              >
+                                <span>{s.facebook}</span>
+                                <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" />
+                              </a>
+                            ) : (
+                              <p className="text-sm text-bvntt-cream">-</p>
+                            )}
+                          </div>
+                          <div className="bg-white/[0.02] border border-white/[0.06] p-3.5 space-y-1">
+                            <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-bvntt-muted">Mảng ứng tuyển</p>
+                            <p className="text-sm font-bold text-bvntt-lilac">{s.mang || "-"}</p>
+                          </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                )}
+
+                      {/* Mục 2: Phần câu hỏi chung (Y hệt form) */}
+                      <div className="space-y-3 pt-2">
+                        <div className="flex items-center gap-2 pb-2 border-b border-white/[0.08]">
+                          <div className="w-1.5 h-4 bg-purple-400 rounded-full" />
+                          <h4 className="text-xs font-bold tracking-[0.12em] uppercase text-bvntt-cream">
+                            2. Câu hỏi chung (Y hệt Form ứng tuyển)
+                          </h4>
+                        </div>
+                        <div className="space-y-3.5">
+                          <div className="bg-white/[0.02] border border-white/[0.08] p-4 space-y-2">
+                            <label className="block text-[11px] font-semibold tracking-[0.08em] uppercase text-bvntt-cream/80">
+                              <span className="text-purple-400 mr-1.5 font-mono">1.</span>
+                              Bạn biết gì về Ban Văn nghệ Thể thao - Đoàn Thanh niên Đại học Bách khoa Hà Nội?
+                            </label>
+                            <div className="bg-white/[0.03] border border-white/[0.06] text-bvntt-cream/90 text-sm p-3.5 leading-relaxed whitespace-pre-wrap">
+                              {s.bietGi ? (
+                                s.bietGi
+                              ) : (
+                                <span className="text-white/30 italic">Ứng viên chưa điền câu trả lời này</span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="bg-white/[0.02] border border-white/[0.08] p-4 space-y-2">
+                            <label className="block text-[11px] font-semibold tracking-[0.08em] uppercase text-bvntt-cream/80">
+                              <span className="text-purple-400 mr-1.5 font-mono">2.</span>
+                              Lý do bạn muốn ứng tuyển vào Ban Văn nghệ Thể thao?
+                            </label>
+                            <div className="bg-white/[0.03] border border-white/[0.06] text-bvntt-cream/90 text-sm p-3.5 leading-relaxed whitespace-pre-wrap">
+                              {s.lyDo ? (
+                                s.lyDo
+                              ) : (
+                                <span className="text-white/30 italic">Ứng viên chưa điền câu trả lời này</span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Mục 3: Phần câu hỏi chuyên môn */}
+                      <div className="space-y-3 pt-2">
+                        <div className="flex items-center gap-2 pb-2 border-b border-white/[0.08]">
+                          <div className="w-1.5 h-4 bg-bvntt-lilac rounded-full" />
+                          <h4 className="text-xs font-bold tracking-[0.12em] uppercase text-bvntt-cream">
+                            3. Câu hỏi chuyên môn — {s.mang || "Chưa xác định"}
+                          </h4>
+                        </div>
+
+                        {answerEntries.length === 0 ? (
+                          <div className="bg-white/[0.02] border border-white/[0.06] p-4 text-xs text-white/40 italic">
+                            Chưa có câu trả lời chuyên môn nào được lưu cho đơn này.
+                          </div>
+                        ) : (
+                          <div className="space-y-3.5">
+                            {answerEntries.map(([qKey, aVal], idx) => {
+                              const questionTitle = QUESTION_LABELS[qKey] || qKey;
+                              const isUrl = typeof aVal === "string" && (aVal.trim().startsWith("http://") || aVal.trim().startsWith("https://"));
+                              return (
+                                <div key={qKey} className="bg-white/[0.02] border border-white/[0.08] p-4 space-y-2">
+                                  <label className="block text-[11px] font-semibold tracking-[0.08em] uppercase text-bvntt-cream/80">
+                                    <span className="text-bvntt-lilac mr-1.5 font-mono">{idx + 1}.</span>
+                                    {questionTitle}
+                                  </label>
+                                  <div className="bg-white/[0.03] border border-white/[0.06] text-bvntt-cream/90 text-sm p-3.5 leading-relaxed whitespace-pre-wrap">
+                                    {isUrl ? (
+                                      <a
+                                        href={aVal.trim()}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-bvntt-lilac hover:text-white underline inline-flex items-center gap-1.5 break-all font-medium"
+                                      >
+                                        <span>{aVal}</span>
+                                        <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" />
+                                      </a>
+                                    ) : (
+                                      aVal || <span className="text-white/30 italic">Chưa có câu trả lời</span>
+                                    )}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
             ))}
           </div>
