@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
 import { FadeUp } from "./animations/FadeUp";
 import { SITE_CONFIG } from "../data/config";
 import { getStoredRecruitment, CONTENT_UPDATED_EVENT, RecruitmentSettings } from "../services/contentService";
@@ -100,16 +100,32 @@ export const RecruitmentSection = ({ onOpenFormModal }: RecruitmentSectionProps)
         </div>
 
         {/* ── CTA Button: Moved below the timeline & centered ── */}
-        <FadeUp delay={0.2} className="mt-14 md:mt-20 flex justify-center">
+        <FadeUp delay={0.2} className="mt-14 md:mt-20 flex flex-col items-center justify-center gap-2.5">
           <div className="pt-2">
-            <button
-              onClick={onOpenFormModal}
-              className="inline-flex items-center gap-2.5 text-xs sm:text-sm font-semibold tracking-[0.12em] uppercase text-bvntt-cream border border-bvntt-border-md bg-white/[0.04] px-7 py-3 hover:border-bvntt-lilac hover:text-bvntt-lilac hover:bg-bvntt-lilac/10 transition-all duration-300 backdrop-blur-sm cursor-pointer"
-            >
-              <span>Đăng ký ngay</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            {recruitment?.isFormLocked ? (
+              <button
+                onClick={onOpenFormModal}
+                className="inline-flex items-center gap-2.5 text-xs sm:text-sm font-semibold tracking-[0.12em] uppercase text-rose-300 border border-rose-500/40 bg-rose-500/10 px-7 py-3 hover:border-rose-400 hover:bg-rose-500/20 transition-all duration-300 backdrop-blur-sm cursor-pointer shadow-[0_0_15px_rgba(244,63,94,0.15)]"
+                title="Cổng đơn hiện đã đóng - Bấm để xem thông báo chi tiết"
+              >
+                <Lock className="w-4 h-4 text-rose-400" />
+                <span>Cổng đăng ký đã đóng</span>
+              </button>
+            ) : (
+              <button
+                onClick={onOpenFormModal}
+                className="inline-flex items-center gap-2.5 text-xs sm:text-sm font-semibold tracking-[0.12em] uppercase text-bvntt-cream border border-bvntt-border-md bg-white/[0.04] px-7 py-3 hover:border-bvntt-lilac hover:text-bvntt-lilac hover:bg-bvntt-lilac/10 transition-all duration-300 backdrop-blur-sm cursor-pointer"
+              >
+                <span>Đăng ký ngay</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            )}
           </div>
+          {recruitment?.isFormLocked && (
+            <p className="text-[11px] text-white/40 tracking-wider uppercase">
+              {recruitment.lockReason || "Đã kết thúc thời gian tiếp nhận hồ sơ"}
+            </p>
+          )}
         </FadeUp>
 
       </div>

@@ -17,6 +17,8 @@ import {
   CheckCircle2,
   Settings,
   AlertTriangle,
+  Lock,
+  Unlock,
 } from "lucide-react";
 import {
   ContentEvent,
@@ -179,7 +181,23 @@ export const ContentManager = () => {
   const handleSaveRecruitment = (savedSettings: RecruitmentSettings) => {
     setRecruitment(savedSettings);
     saveStoredRecruitment(savedSettings);
-    showToast("Đã cập nhật đợt tuyển thành viên và timeline");
+    showToast("Đã cập nhật cài đặt đợt tuyển thành viên");
+  };
+
+  const handleQuickToggleLock = () => {
+    const nextLocked = !recruitment.isFormLocked;
+    const confirmMsg = nextLocked
+      ? "Bạn có chắc chắn muốn KHÓA CỔNG ĐƠN ĐĂNG KÝ? Ứng viên truy cập /form sẽ không thể gửi đơn nữa."
+      : "Bạn có chắc chắn muốn MỞ LẠI CỔNG ĐƠN ĐĂNG KÝ để tiếp tục nhận hồ sơ?";
+    if (window.confirm(confirmMsg)) {
+      const updated: RecruitmentSettings = {
+        ...recruitment,
+        isFormLocked: nextLocked,
+      };
+      setRecruitment(updated);
+      saveStoredRecruitment(updated);
+      showToast(nextLocked ? "Đã khóa cổng đơn đăng ký" : "Đã mở lại cổng đơn đăng ký");
+    }
   };
 
   // ── Backup & Reset ──
@@ -614,12 +632,22 @@ export const ContentManager = () => {
           {/* Recruitment Timeline Banner Box */}
           <div className="p-5 bg-white/[0.02] border border-white/[0.08] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="space-y-1">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-bvntt-lilac">
                   Đợt tuyển thành viên {recruitment.year}
                 </span>
                 <span className="text-white/20">•</span>
                 <span className="text-xs text-white/60">{recruitment.tagline}</span>
+                <span className="text-white/20">•</span>
+                {recruitment.isFormLocked ? (
+                  <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40">
+                    <Lock className="w-3 h-3" /> Cổng đơn: Đã khóa
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                    <Unlock className="w-3 h-3" /> Cổng đơn: Đang mở
+                  </span>
+                )}
               </div>
               <h3 className="font-display font-bold text-xl text-bvntt-cream uppercase tracking-wide">
                 {recruitment.title}
@@ -634,12 +662,35 @@ export const ContentManager = () => {
               </div>
             </div>
 
-            <button
-              onClick={() => setRecruitmentModalOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-2 bg-bvntt-lilac text-[#07040d] font-bold text-xs uppercase tracking-wider hover:bg-bvntt-lilac/90 transition cursor-pointer flex-shrink-0"
-            >
-              <Settings className="w-3.5 h-3.5" /> Chỉnh sửa đợt tuyển
-            </button>
+            <div className="flex items-center gap-2.5 flex-shrink-0">
+              <button
+                type="button"
+                onClick={handleQuickToggleLock}
+                className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold uppercase tracking-wider transition cursor-pointer border rounded ${
+                  recruitment.isFormLocked
+                    ? "bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border-emerald-500/40"
+                    : "bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border-rose-500/40"
+                }`}
+                title={recruitment.isFormLocked ? "Bấm để mở lại cổng đơn" : "Bấm để khóa cổng đơn"}
+              >
+                {recruitment.isFormLocked ? (
+                  <>
+                    <Unlock className="w-3.5 h-3.5" /> Mở lại cổng đơn
+                  </>
+                ) : (
+                  <>
+                    <Lock className="w-3.5 h-3.5" /> Khóa cổng đơn
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={() => setRecruitmentModalOpen(true)}
+                className="flex items-center gap-1.5 px-4 py-2 bg-bvntt-lilac text-[#07040d] font-bold text-xs uppercase tracking-wider hover:bg-bvntt-lilac/90 transition cursor-pointer rounded"
+              >
+                <Settings className="w-3.5 h-3.5" /> Chỉnh sửa đợt tuyển
+              </button>
+            </div>
           </div>
 
           {/* Search clubs */}

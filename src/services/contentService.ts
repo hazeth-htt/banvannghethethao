@@ -43,6 +43,9 @@ export interface RecruitmentSettings {
   tagline: string;
   formUrl: string;
   stages: RecruitmentStage[];
+  isFormLocked?: boolean;
+  lockedMessage?: string;
+  lockReason?: string;
 }
 
 // ── Storage Keys ───────────────────────────────────────────────────────────
@@ -122,6 +125,9 @@ export const DEFAULT_RECRUITMENT: RecruitmentSettings = {
   tagline: SITE_CONFIG.recruitment.tagline,
   formUrl: SITE_CONFIG.recruitmentFormUrl,
   stages: SITE_CONFIG.recruitment.stages.map((s) => ({ ...s })),
+  isFormLocked: false,
+  lockedMessage: "Cổng tiếp nhận đơn đăng ký đợt tuyển thành viên hiện đã chính thức đóng lại. Cảm ơn tất cả các bạn đã dành thời gian và sự quan tâm tới Ban Văn nghệ Thể thao!",
+  lockReason: "Đã hết hạn tiếp nhận đơn đăng ký",
 };
 
 // ── Database Sync Functions ───────────────────────────────────────────────

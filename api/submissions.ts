@@ -20,6 +20,21 @@ export default async function handler(req: any, res: any) {
   try {
     if (req.method === 'POST') {
       const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+
+      // Kiểm tra xem cổng đăng ký có bị khóa trong Neon DB không
+      try {
+        const recruitmentRow = await sql`
+          SELECT data FROM bvntt_content WHERE key = 'recruitment' LIMIT 1;
+        `;
+        if (recruitmentRow.length > 0 && recruitmentRow[0]?.data?.isFormLocked) {
+          return res.status(403).json({
+            error: 'Cổng đăng ký đợt tuyển hiện đã được khóa, không thể tiếp nhận thêm đơn mới.',
+          });
+        }
+      } catch (checkErr) {
+        console.warn('Cannot check recruitment lock status:', checkErr);
+      }
+
       const {
         hoTen,
         mssv,

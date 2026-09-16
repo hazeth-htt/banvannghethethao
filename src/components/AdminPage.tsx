@@ -18,11 +18,21 @@ import {
   ExternalLink,
   Phone,
   Mail,
+  Lock,
+  Unlock,
+  Settings,
 } from "lucide-react";
 import { fetchSubmissions, deleteSubmission, Submission } from "../services/dbService";
 import { ContentManager } from "./admin/ContentManager";
 import { AnalyticsDashboard } from "./admin/AnalyticsDashboard";
-import { fetchContentFromDatabase } from "../services/contentService";
+import {
+  fetchContentFromDatabase,
+  getStoredRecruitment,
+  saveStoredRecruitment,
+  RecruitmentSettings,
+  CONTENT_UPDATED_EVENT,
+} from "../services/contentService";
+import { RecruitmentSettingsModal } from "./admin/RecruitmentSettingsModal";
 
 const ADMIN_PASSWORD = "bvntt2026"; // Change this in production
 const AUTH_KEY = "bvntt_admin_authenticated";
@@ -105,6 +115,36 @@ export const AdminPage = () => {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [filterMang, setFilterMang] = useState("all");
+  const [recruitment, setRecruitment] = useState<RecruitmentSettings>(() => getStoredRecruitment());
+  const [recruitmentModalOpen, setRecruitmentModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setRecruitment(getStoredRecruitment());
+    };
+    window.addEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+    return () => window.removeEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+  }, []);
+
+  const handleSaveRecruitment = (saved: RecruitmentSettings) => {
+    setRecruitment(saved);
+    saveStoredRecruitment(saved);
+  };
+
+  const handleQuickToggleFormLock = () => {
+    const nextLocked = !recruitment.isFormLocked;
+    const confirmMsg = nextLocked
+      ? "Bạn có chắc chắn muốn KHÓA CỔNG ĐƠN ĐĂNG KÝ? Người dùng truy cập /form sẽ không thể nộp đơn nữa."
+      : "Bạn có chắc chắn muốn MỞ LẠI CỔNG ĐƠN ĐĂNG KÝ để tiếp tục nhận hồ sơ?";
+    if (window.confirm(confirmMsg)) {
+      const updated: RecruitmentSettings = {
+        ...recruitment,
+        isFormLocked: nextLocked,
+      };
+      setRecruitment(updated);
+      saveStoredRecruitment(updated);
+    }
+  };
 
   const loadData = async () => {
     setLoading(true);
@@ -487,6 +527,78 @@ export const AdminPage = () => {
           <ContentManager />
         ) : (
           <>
+            {/* Form Lock Status Bar */}
+            <div
+              className={`p-4 border rounded flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors ${
+                recruitment.isFormLocked
+                  ? "bg-rose-950/25 border-rose-500/35"
+                  : "bg-emerald-950/20 border-emerald-500/30"
+              }`}
+            >
+              <div className="flex items-start sm:items-center gap-3">
+                <div
+                  className={`w-9 h-9 rounded flex items-center justify-center flex-shrink-0 transition-colors ${
+                    recruitment.isFormLocked
+                      ? "bg-rose-500/20 text-rose-400 border border-rose-500/40"
+                      : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                  }`}
+                >
+                  {recruitment.isFormLocked ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-bvntt-cream">
+                      Trạng thái Cổng Đơn Tuyển Thành Viên
+                    </span>
+                    <span
+                      className={`text-[10px] font-extrabold uppercase px-2 py-0.5 rounded ${
+                        recruitment.isFormLocked
+                          ? "bg-rose-500/25 text-rose-300 border border-rose-500/40"
+                          : "bg-emerald-500/25 text-emerald-300 border border-emerald-500/40"
+                      }`}
+                    >
+                      {recruitment.isFormLocked ? "Đã Khóa - Ngừng nhận đơn" : "Đang Mở Nhận Hồ Sơ"}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-white/50 pt-0.5">
+                    {recruitment.isFormLocked
+                      ? `Cổng /form hiện hiển thị thông báo đóng đơn. Lý do: ${recruitment.lockReason || "Đã hết hạn nộp đơn"}`
+                      : "Sinh viên có thể truy cập /form để điền và nộp hồ sơ trực tuyến."}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={handleQuickToggleFormLock}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition cursor-pointer border rounded ${
+                    recruitment.isFormLocked
+                      ? "bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border-emerald-500/40"
+                      : "bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border-rose-500/40"
+                  }`}
+                  title={recruitment.isFormLocked ? "Bấm để mở lại form" : "Bấm để khóa form ngay"}
+                >
+                  {recruitment.isFormLocked ? (
+                    <>
+                      <Unlock className="w-3.5 h-3.5" /> Mở lại cổng đơn
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="w-3.5 h-3.5" /> Khóa cổng đơn ngay
+                    </>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setRecruitmentModalOpen(true)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.1] transition cursor-pointer rounded"
+                >
+                  <Settings className="w-3.5 h-3.5" /> Cài đặt
+                </button>
+              </div>
+            </div>
+
             {/* Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
               {[
@@ -755,6 +867,14 @@ export const AdminPage = () => {
           </>
         )}
       </main>
+
+      {/* Recruitment Settings Modal */}
+      <RecruitmentSettingsModal
+        isOpen={recruitmentModalOpen}
+        onClose={() => setRecruitmentModalOpen(false)}
+        onSave={handleSaveRecruitment}
+        initialSettings={recruitment}
+      />
     </div>
   );
 };

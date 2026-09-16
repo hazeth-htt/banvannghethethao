@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, ArrowRight, CheckCircle, ChevronDown, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle, ChevronDown, Check, Lock, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { submitApplication } from "../services/dbService";
+import { getStoredRecruitment, CONTENT_UPDATED_EVENT, RecruitmentSettings } from "../services/contentService";
+import { SITE_CONFIG } from "../data/config";
 
 interface RecruitmentFormPageProps {
   onBack?: () => void;
@@ -228,9 +230,18 @@ const SectionHeader = ({ title, note }: { title: string; note?: string }) => (
 );
 
 export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
+  const [recruitment, setRecruitment] = useState<RecruitmentSettings>(() => getStoredRecruitment());
   const [step, setStep] = useState<Step>("common");
   const [data, setData] = useState<FormData>(initialData);
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setRecruitment(getStoredRecruitment());
+    };
+    window.addEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+    return () => window.removeEventListener(CONTENT_UPDATED_EVENT, handleUpdate);
+  }, []);
 
   useEffect(() => { window.scrollTo({ top: 0 }); }, [step]);
 
@@ -245,6 +256,11 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
   };
 
   const handleSubmit = async () => {
+    const latestRec = getStoredRecruitment();
+    if (latestRec.isFormLocked) {
+      alert("Cổng đăng ký đợt tuyển thành viên hiện đã đóng, không thể gửi đơn.");
+      return;
+    }
     setSubmitting(true);
     await new Promise(r => setTimeout(r, 800));
     // Build answers object for mảng-specific questions
@@ -343,18 +359,111 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
           {/* Header Content */}
           <div className="relative z-10 max-w-2xl mx-auto text-center px-6">
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl uppercase leading-tight text-bvntt-cream mb-4 tracking-normal">
-              ĐĂNG KÝ<br /><span className="text-bvntt-lilac">GIA NHẬP BAN</span>
+              {recruitment.isFormLocked ? (
+                <>
+                  CỔNG ĐĂNG KÝ<br />
+                  <span className="text-rose-400">HIỆN ĐÃ ĐÓNG</span>
+                </>
+              ) : (
+                <>
+                  ĐĂNG KÝ<br />
+                  <span className="text-bvntt-lilac">GIA NHẬP BAN</span>
+                </>
+              )}
             </h1>
             <p className="text-xs sm:text-sm text-bvntt-muted font-normal leading-relaxed max-w-md mx-auto">
-              <span>Điền đầy đủ thông tin bên dưới.</span>
-              <br />
-              <span className="text-white/45">Form sẽ hướng dẫn bạn qua từng phần theo mảng bạn ứng tuyển.</span>
+              {recruitment.isFormLocked ? (
+                <span>Đợt tuyển thành viên {recruitment.year || 2026} đã chính thức kết thúc thời gian tiếp nhận hồ sơ.</span>
+              ) : (
+                <>
+                  <span>Điền đầy đủ thông tin bên dưới.</span>
+                  <br />
+                  <span className="text-white/45">Form sẽ hướng dẫn bạn qua từng phần theo mảng bạn ứng tuyển.</span>
+                </>
+              )}
             </p>
           </div>
         </div>
 
-        {/* Form Progress Bar */}
-        <div className="bg-[#0d0919] border-y border-white/[0.06] py-5 px-6">
+        {recruitment.isFormLocked ? (
+          <div className="py-12 md:py-20 px-6">
+            <div className="max-w-xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="relative bg-gradient-to-b from-[#140b24]/90 to-[#0a0514]/95 border border-white/[0.12] p-8 sm:p-12 text-center shadow-2xl backdrop-blur-xl overflow-hidden rounded-sm"
+              >
+                {/* Glow ambient circle */}
+                <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-60 h-60 bg-rose-500/15 rounded-full blur-3xl pointer-events-none" />
+
+                {/* Animated Lock Icon */}
+                <div className="relative mb-6 inline-flex">
+                  <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 shadow-[0_0_30px_rgba(244,63,94,0.2)]">
+                    <Lock className="w-8 h-8 sm:w-9 sm:h-9" />
+                  </div>
+                </div>
+
+                {/* Status Badge */}
+                <div className="mb-4">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-rose-500/20 text-rose-300 border border-rose-500/35">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-ping" />
+                    Đã Khóa Nhận Hồ Sơ
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h2 className="font-display font-black text-2xl sm:text-3xl text-bvntt-cream uppercase tracking-wide mb-3">
+                  {recruitment.title || `Tuyển thành viên ${recruitment.year || 2026}`}
+                </h2>
+
+                {/* Reason Tag */}
+                {recruitment.lockReason && (
+                  <div className="inline-block text-xs font-semibold text-rose-300/90 bg-rose-950/50 border border-rose-500/25 px-3 py-1 rounded mb-5">
+                    Lý do: {recruitment.lockReason}
+                  </div>
+                )}
+
+                {/* Main Message */}
+                <p className="text-sm sm:text-base text-bvntt-muted leading-relaxed max-w-md mx-auto mb-8 whitespace-pre-wrap">
+                  {recruitment.lockedMessage ||
+                    "Cổng tiếp nhận đơn đăng ký đợt tuyển thành viên hiện đã chính thức đóng lại. Cảm ơn tất cả các bạn đã dành thời gian và sự quan tâm tới Ban Văn nghệ Thể thao!"}
+                </p>
+
+                {/* Divider */}
+                <div className="w-16 h-px bg-white/10 mx-auto mb-6" />
+
+                {/* Instructions for candidates */}
+                <p className="text-xs text-white/45 max-w-sm mx-auto mb-8 leading-relaxed">
+                  Các bạn ứng viên đã nộp đơn xin vui lòng kiểm tra hòm thư email (kể cả hòm thư Spam) để không bỏ lỡ thông báo phỏng vấn sắp tới.
+                </p>
+
+                {/* Actions */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <button
+                    onClick={onBack}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-bvntt-lilac text-[#07040d] font-bold text-xs uppercase tracking-wider hover:bg-bvntt-lilac/90 transition shadow-lg cursor-pointer"
+                  >
+                    <ArrowLeft className="w-4 h-4" /> Về trang chủ
+                  </button>
+
+                  <a
+                    href={SITE_CONFIG.facebookUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-white font-semibold text-xs uppercase tracking-wider hover:bg-white/[0.06] hover:border-white/40 transition"
+                  >
+                    <span>Fanpage BVNTT</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Form Progress Bar */}
+            <div className="bg-[#0d0919] border-y border-white/[0.06] py-5 px-6">
           <div className="max-w-2xl mx-auto flex items-center justify-center">
             {[
               { label: "Thông tin cá nhân", done: ["division_select", "to_chuc", "truyen_thong", "media_design", "doi_ngoai", "final", "success"].includes(step), active: step === "common" },
@@ -610,8 +719,10 @@ export const RecruitmentFormPage = ({ onBack }: RecruitmentFormPageProps) => {
                 </motion.div>
               )}
             </AnimatePresence>
+            </div>
           </div>
-        </div>
+          </>
+        )}
       </main>
 
       <footer className="border-t border-white/[0.05] py-6 text-center text-[10px] tracking-widest uppercase text-white/20">
